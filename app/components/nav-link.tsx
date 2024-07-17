@@ -1,5 +1,5 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-export default function NavLink({ children } : { children: string }) {
+export default function NavLink({ children }: { children: string }) {
   return <Link href={'/resumo'}>{children}</Link>
 }
