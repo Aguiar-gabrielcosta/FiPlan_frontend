@@ -1,13 +1,15 @@
 import { Suspense } from 'react'
 import MonthlyBalance from '../components/resumo/monthlyBalance'
 import Loading from '../components/loading'
+import FastActions from '../components/resumo/fastActions'
 
 export default function Resumo() {
   return (
-    <>
+    <div className="grid grid-cols-[1fr_auto] gap-2">
       <Suspense fallback={<Loading />}>
         <MonthlyBalance />
       </Suspense>
-    </>
+      <FastActions />
+    </div>
   )
 }

@@ -8,7 +8,7 @@ const data = {
 
 export default async function MonthlyBalance() {
   return (
-    <Section title="Balanço Mensal">
+    <Section width="full" title="Balanço Mensal">
       <div className="flex gap-2">
         <div className="flex flex-grow flex-col gap-4 rounded-lg bg-dashboardPositive p-2">
           <h4 className="font-medium text-primaryDR">Receita</h4>
