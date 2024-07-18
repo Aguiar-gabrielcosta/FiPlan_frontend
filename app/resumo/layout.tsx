@@ -6,9 +6,9 @@ export default function LayoutDashboard({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-screen gap-2 p-2">
+    <div className="flex h-screen overflow-hidden">
       <Menu />
-      <main>{children}</main>
+      <main className="flex-grow overflow-y-auto p-2">{children}</main>
     </div>
   )
 }
