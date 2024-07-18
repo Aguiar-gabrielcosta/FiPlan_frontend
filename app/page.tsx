@@ -1,7 +1,7 @@
 import { Italiana } from 'next/font/google'
 import Image from 'next/image'
 import { ArrowRight, LogIn } from 'lucide-react'
-import NavLink from './components/homeLinks'
+import NavLink from './components/homeLink'
 
 const italian = Italiana({ subsets: ['latin'], weight: ['400'] })
 

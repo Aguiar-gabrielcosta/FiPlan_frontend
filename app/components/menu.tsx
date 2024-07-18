@@ -22,7 +22,7 @@ export default function Menu() {
         </div>
         <Link
           href={'/'}
-          className="flex justify-center rounded-lg bg-primaryDR py-4 text-neutralWhite"
+          className="flex justify-center rounded-lg bg-primaryDR py-4 text-neutralWhite transition-all hover:bg-opacity-80"
         >
           <div className="flex gap-1">
             Sair
