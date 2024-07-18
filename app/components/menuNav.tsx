@@ -14,7 +14,7 @@ const links = [
   { label: 'Histórico', icon: <History />, href: '/resumo/historico' },
 ]
 
-export default function MenuLink() {
+export default function MenuNav() {
   const pathname = usePathname()
 
   return (

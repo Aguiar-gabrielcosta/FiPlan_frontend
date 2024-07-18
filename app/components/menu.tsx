@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import MenuLink from './menuLinks'
 import Link from 'next/link'
 import { LogOut } from 'lucide-react'
+import MenuNav from './menuNav'
 
 export default function Menu() {
   return (
@@ -18,7 +18,7 @@ export default function Menu() {
       </header>
       <nav className="flex h-full flex-col justify-between">
         <div>
-          <MenuLink />
+          <MenuNav />
         </div>
         <Link
           href={'/'}

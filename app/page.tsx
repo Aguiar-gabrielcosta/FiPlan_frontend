@@ -1,7 +1,7 @@
 import { Italiana } from 'next/font/google'
 import Image from 'next/image'
 import { ArrowRight, LogIn } from 'lucide-react'
-import NavLink from './components/homeLink'
+import HomeNavLink from './components/homeLink'
 
 const italian = Italiana({ subsets: ['latin'], weight: ['400'] })
 
@@ -21,18 +21,18 @@ export default function Home() {
             planeje o futuro e controle o presente.
           </h2>
           <nav className="flex justify-center gap-1 p-2">
-            <NavLink variant="default">
+            <HomeNavLink variant="default">
               <>
                 Acessar
                 <LogIn size={20} />
               </>
-            </NavLink>
-            <NavLink variant="light">
+            </HomeNavLink>
+            <HomeNavLink variant="light">
               <>
                 Cadastrar
                 <ArrowRight size={20} />
               </>
-            </NavLink>
+            </HomeNavLink>
           </nav>
         </main>
       </div>
