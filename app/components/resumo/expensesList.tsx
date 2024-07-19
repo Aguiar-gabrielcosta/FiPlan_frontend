@@ -70,7 +70,8 @@ export default async function ExpensesList({
         <ExpenseInfo
           key={item.category}
           category={item.category}
-          porcentageOfBudget={item.porcentageOfBudget}
+          percentage={item.porcentageOfBudget}
+          acceptable={0.7}
           expense={item.expenses}
         />
       ))}

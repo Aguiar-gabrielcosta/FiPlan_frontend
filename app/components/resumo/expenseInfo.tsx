@@ -4,15 +4,15 @@ import getAlertLevel from '@/app/utils/getAlertLevel'
 
 interface ExpenseInfoProps {
   category: string
-  porcentageOfBudget: number
-  acceptablePorcentage?: number
+  percentage: number
+  acceptable?: number
   expense: number
 }
 
 export default function ExpenseInfo({
   category,
-  porcentageOfBudget,
-  acceptablePorcentage,
+  percentage,
+  acceptable,
   expense,
 }: ExpenseInfoProps) {
   const bgAlertVariants = {
@@ -27,8 +27,8 @@ export default function ExpenseInfo({
     red: 'text-alertRed',
   }
 
-  const { alert } = getAlertLevel(porcentageOfBudget, acceptablePorcentage)
-  const progress = checkProgress(porcentageOfBudget) * 100
+  const { alert } = getAlertLevel(percentage, acceptable)
+  const progress = checkProgress(percentage) * 100
 
   return (
     <div className="flex items-center gap-4 rounded-lg bg-neutralWhite p-2 drop-shadow-md">

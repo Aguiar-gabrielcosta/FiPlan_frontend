@@ -4,6 +4,7 @@ import Loading from '../components/loading'
 import FastActions from '../components/resumo/fastActions'
 import PlanSelector from '../components/resumo/planSelector'
 import ExpensesByCategory from '../components/resumo/expensesByCategory'
+import BudgetInfo from '../components/resumo/budgetInfo'
 
 export default function Resumo() {
   return (
@@ -15,8 +16,11 @@ export default function Resumo() {
         <FastActions />
         <PlanSelector />
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-start gap-2">
         <ExpensesByCategory />
+        <Suspense fallback={<Loading />}>
+          <BudgetInfo />
+        </Suspense>
       </div>
     </div>
   )
