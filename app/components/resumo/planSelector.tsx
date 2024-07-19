@@ -37,6 +37,7 @@ export default function PlanSelector() {
         <select
           form="dashboardPlan"
           className="rounded-lg border border-primaryDR p-2"
+          aria-label="Selecione o período de análise"
         >
           {data.map((plan) => {
             return (
