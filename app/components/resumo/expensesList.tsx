@@ -62,7 +62,7 @@ export default async function ExpensesList({
 }: {
   showLess: boolean
 }) {
-  const filteredData = showLess ? data.slice(0, 6) : data
+  const filteredData = showLess ? data.slice(0, 5) : data
 
   return (
     <>
