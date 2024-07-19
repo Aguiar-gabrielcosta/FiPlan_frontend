@@ -32,9 +32,9 @@ export default function ExpenseInfo({
 
   return (
     <div className="flex items-center gap-4 rounded-lg bg-neutralWhite p-2 drop-shadow-md">
-      <h5 className="w-32 truncate text-nowrap text-start font-bold text-primaryDR">
+      <h4 className="w-32 truncate text-nowrap text-start font-bold text-primaryDR">
         {category}
-      </h5>
+      </h4>
       <div className="h-[10px] w-[150px] rounded-lg bg-primaryLR">
         <div
           className={`h-full rounded-lg ${bgAlertVariants[alert]}`}
