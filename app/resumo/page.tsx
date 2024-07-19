@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import MonthlyBalance from '../components/resumo/monthlyBalance'
 import Loading from '../components/loading'
 import FastActions from '../components/resumo/fastActions'
+import PlanSelector from '../components/resumo/planSelector'
 
 export default function Resumo() {
   return (
@@ -10,6 +11,7 @@ export default function Resumo() {
         <MonthlyBalance />
       </Suspense>
       <FastActions />
+      <PlanSelector />
     </div>
   )
 }
