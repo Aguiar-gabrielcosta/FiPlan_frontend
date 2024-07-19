@@ -5,11 +5,11 @@ export default function FastActions() {
   return (
     <Section width="fit" title="Acesso Rápido">
       <div className="flex h-full gap-2">
-        <button className="flex items-center gap-1 rounded-lg border border-primaryDR p-2 font-medium text-alertPositive">
+        <button className="text-alertGreen flex items-center gap-1 rounded-lg border border-primaryDR p-2 font-medium">
           <CirclePlus width={48} height={48} />
           <p className="w-[100px]">Adicionar Receita</p>
         </button>
-        <button className="flex items-center gap-1 rounded-lg border border-primaryDR p-2 font-medium text-alertNegative">
+        <button className="text-alertRed flex items-center gap-1 rounded-lg border border-primaryDR p-2 font-medium">
           <CircleMinus width={48} height={48} />
           <p className="w-[100px]">Adicionar Gasto</p>
         </button>

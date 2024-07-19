@@ -3,6 +3,7 @@ import MonthlyBalance from '../components/resumo/monthlyBalance'
 import Loading from '../components/loading'
 import FastActions from '../components/resumo/fastActions'
 import PlanSelector from '../components/resumo/planSelector'
+import ExpensesByCategory from '../components/resumo/expensesByCategory'
 
 export default function Resumo() {
   return (
@@ -12,6 +13,7 @@ export default function Resumo() {
       </Suspense>
       <FastActions />
       <PlanSelector />
+      <ExpensesByCategory />
     </div>
   )
 }
