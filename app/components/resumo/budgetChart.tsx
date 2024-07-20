@@ -1,5 +1,5 @@
-import checkProgress from '@/app/utils/checkProgress'
-import getAlertLevel from '@/app/utils/getAlertLevel'
+import checkProgress from '@/app/lib/utils/checkProgress'
+import getAlertLevel from '@/app/lib/utils/getAlertLevel'
 
 interface BudgetChartProps {
   percentage: number

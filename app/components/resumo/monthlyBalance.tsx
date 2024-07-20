@@ -1,4 +1,4 @@
-import formatValue from '@/app/utils/formatValue'
+import formatValue from '@/app/lib/utils/formatValue'
 import Section from '../section'
 
 const data = {
