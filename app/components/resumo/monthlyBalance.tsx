@@ -2,16 +2,8 @@ import formatValue from '@/app/lib/utils/formatValue'
 import Section from '../section'
 import { fetchMonthlyBalance } from '@/app/lib/service/apiConsumer'
 
-// const data = {
-//   receita: 10000,
-//   gastos: 5110,
-// }
-
 export default async function MonthlyBalance() {
   const balance = await fetchMonthlyBalance()
-  console.log(balance)
-  console.log(balance.monthExpense)
-  console.log(balance.monthIncome)
 
   return (
     <Section width="full" title="Balanço Mensal">
