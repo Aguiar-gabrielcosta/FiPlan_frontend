@@ -1,31 +1,14 @@
 const apiBaseURL = process.env.API_URL
 
-export async function fetchTransactions() {
+export async function fetchMonthlyBalance(): Promise<{
+  monthIncome: number
+  monthExpense: number
+}> {
   try {
-    const transactionsData = await fetch(apiBaseURL + '/transactions')
-
-    return transactionsData.json()
+    const monthlyBalanceData = await fetch(apiBaseURL + '/transactions/balance')
+    return monthlyBalanceData.json()
   } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function fetchBugets() {
-  try {
-    const budgetsData = await fetch(apiBaseURL + '/plans/budgets')
-
-    return budgetsData.json()
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function fetchCategories() {
-  try {
-    const categoriesData = await fetch(apiBaseURL + '/plans/categories')
-
-    return categoriesData.json()
-  } catch (error) {
-    console.log(error)
+    console.log('Failed to fecth Monthly Balance: ' + error)
+    throw Error('Failed to fecth Monthly Balance ')
   }
 }
