@@ -11,6 +11,7 @@ export default function Resumo({
 }: {
   searchParams?: { plan?: string }
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const planId = searchParams?.plan || ''
 
   return (
