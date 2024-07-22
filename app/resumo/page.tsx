@@ -2,9 +2,9 @@ import { Suspense } from 'react'
 import MonthlyBalance from '../components/resumo/monthlyBalance'
 import Loading from '../components/loading'
 import FastActions from '../components/resumo/fastActions'
-import PlanSelector from '../components/resumo/planSelector'
-import ExpensesByCategory from '../components/resumo/expensesByCategory'
-import BudgetInfo from '../components/resumo/budgetInfo'
+import PlanSelector from '../components/resumo/planSelector/planSelector'
+import ExpensesByCategory from '../components/resumo/expensesByCategory/expensesByCategory'
+import BudgetInfo from '../components/resumo/planProgress/planInfo'
 
 export default function Resumo({
   searchParams,

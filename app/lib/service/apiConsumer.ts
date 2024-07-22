@@ -1,30 +1,23 @@
+import { monthlyBalance, Plan } from '../definitions'
+
 const apiBaseURL = process.env.API_URL
 
-export async function fetchMonthlyBalance(): Promise<{
-  monthIncome: number
-  monthExpense: number
-}> {
+export async function fetchMonthlyBalance(): Promise<monthlyBalance> {
   try {
     const monthlyBalanceData = await fetch(apiBaseURL + '/transactions/balance')
     return monthlyBalanceData.json()
   } catch (error) {
-    console.log('Failed to fetch Monthly Balance: ' + error)
-    throw Error('Failed to fetch Monthly Balance')
+    console.log('Databse error: ' + error)
+    throw new Error('Failed to fetch balance')
   }
 }
 
-export async function fetchPlans(): Promise<
-  {
-    budgetId: string
-    startDate: string
-    endDate: string
-  }[]
-> {
+export async function fetchPlans(): Promise<Plan[]> {
   try {
     const plans = await fetch(apiBaseURL + '/plans')
     return plans.json()
   } catch (error) {
-    console.log('Failed to fetch plans: ' + error)
-    throw Error('Failed to fecth plans')
+    console.log('Databse error: ' + error)
+    throw new Error('Failed to fetch plans')
   }
 }

@@ -1,12 +1,7 @@
 'use client'
 
+import { Plan } from '@/app/lib/definitions'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-
-export type Plan = {
-  budgetId: string
-  startDate: string
-  endDate: string
-}
 
 type Props = {
   data: Plan[]

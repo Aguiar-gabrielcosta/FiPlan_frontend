@@ -1,5 +1,5 @@
 import formatValue from '@/app/lib/utils/formatValue'
-import Section from '../section'
+import Section from '../../section'
 import BudgetChart from './budgetChart'
 
 const data = {
@@ -9,8 +9,8 @@ const data = {
   timeFrame: 'jul/24',
 }
 
-export default async function BudgetInfo() {
-  const formatedData = (): { header: string; value: string }[] => {
+export default async function planInfo() {
+  const displayData = (): { header: string; value: string }[] => {
     return [
       {
         header: `Orçamento - ${data.timeFrame}`,
@@ -27,7 +27,7 @@ export default async function BudgetInfo() {
     <Section title="Meta atual" width="fit">
       <div className="flex flex-col items-center gap-2 px-4 py-2">
         <BudgetChart percentage={data.totalPercentage} acceptable={0.7} />
-        {formatedData().map((item, index) => (
+        {displayData().map((item, index) => (
           <div key={index} className="flex flex-col items-center gap-2 p-2">
             <h4 className="font-medium text-primaryDR">{item.header}</h4>
             <span className="font-bold text-primaryDR">{item.value}</span>
