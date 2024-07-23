@@ -23,12 +23,20 @@ export default function Resumo({
         <FastActions />
         <PlanSelector />
       </div>
-      <div className="flex flex-wrap items-start gap-2">
-        <ExpensesByCategory />
-        <Suspense fallback={<Loading />}>
-          <BudgetInfo />
-        </Suspense>
-      </div>
+      {planId ? (
+        <div className="flex flex-wrap items-start gap-2">
+          <ExpensesByCategory planId={planId} />
+          <Suspense fallback={<Loading />}>
+            <BudgetInfo planId={planId} />
+          </Suspense>
+        </div>
+      ) : (
+        <div>
+          <h1 className="mt-8 h-full text-center text-lg font-medium text-primaryDR">
+            Selecione um plano na barra acima, ou crie um novo.
+          </h1>
+        </div>
+      )}
     </div>
   )
 }

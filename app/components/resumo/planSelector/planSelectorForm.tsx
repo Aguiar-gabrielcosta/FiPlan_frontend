@@ -21,9 +21,6 @@ export default function PlanSelectorForm({ data }: Props) {
       params.delete('plan')
     }
 
-    console.log(params.toString())
-    console.log(pathname)
-
     replace(`${pathname}?${params.toString()}`)
   }
 
