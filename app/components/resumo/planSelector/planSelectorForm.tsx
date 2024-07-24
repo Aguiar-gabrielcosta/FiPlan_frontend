@@ -1,6 +1,7 @@
 'use client'
 
 import { Plan } from '@/app/lib/definitions'
+import formatDate from '@/app/lib/utils/formatDate'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 type Props = {
@@ -35,8 +36,8 @@ export default function PlanSelectorForm({ data }: Props) {
         <option value="">Selecione um plano</option>
         {data.map((plan) => {
           return (
-            <option key={plan.budgetId} value={plan.budgetId}>
-              {`${plan.startDate} até ${plan.endDate}`}
+            <option key={plan.plan_id} value={plan.plan_id}>
+              {`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}
             </option>
           )
         })}
