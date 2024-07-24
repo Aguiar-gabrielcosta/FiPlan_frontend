@@ -1,7 +1,7 @@
 // Tipos de respostas da api
 export type monthlyBalance = {
-  monthIncome: number
-  monthExpense: number
+  month_income: number
+  month_expense: number
 }
 
 export type Plan = {

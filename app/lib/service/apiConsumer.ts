@@ -1,4 +1,9 @@
-import { monthlyBalance, Plan, PlanProgress } from '../definitions'
+import {
+  ExpensesPerCategory,
+  monthlyBalance,
+  Plan,
+  PlanProgress,
+} from '../definitions'
 
 const apiBaseURL = process.env.API_URL
 const userId = process.env.TEST_USER
@@ -6,7 +11,7 @@ const userId = process.env.TEST_USER
 export async function fetchMonthlyBalance(): Promise<monthlyBalance> {
   try {
     const monthlyBalanceData = await fetch(
-      `${apiBaseURL}/transaction/${userId}/balance`,
+      `${apiBaseURL}/transaction/balance/${userId}`,
     )
     return monthlyBalanceData.json()
   } catch (error) {
@@ -34,5 +39,20 @@ export async function fecthPlanProgress(planId: string): Promise<PlanProgress> {
   } catch (error) {
     console.log('Databse error: ' + error)
     throw new Error('Failed to fetch plan progress.')
+  }
+}
+
+export async function fecthExpensesPerCategory(
+  planId: string,
+): Promise<ExpensesPerCategory[]> {
+  try {
+    const expensesPerCategory = await fetch(
+      `${apiBaseURL}/transaction/expenses/category/${userId}/${planId}`,
+    )
+
+    return expensesPerCategory.json()
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    throw new Error('Failed to fetch expenses per category data.')
   }
 }
