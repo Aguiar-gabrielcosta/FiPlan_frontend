@@ -1,4 +1,4 @@
-import { monthlyBalance, Plan } from '../definitions'
+import { monthlyBalance, Plan, PlanProgress } from '../definitions'
 
 const apiBaseURL = process.env.API_URL
 const userId = process.env.TEST_USER
@@ -22,5 +22,17 @@ export async function fetchPlans(): Promise<Plan[]> {
   } catch (error) {
     console.log('Databse error: ' + error)
     throw new Error('Failed to fetch plans')
+  }
+}
+
+export async function fecthPlanProgress(planId: string): Promise<PlanProgress> {
+  try {
+    const planProgress = await fetch(
+      `${apiBaseURL}/plan/progress/${userId}/${planId}`,
+    )
+    return planProgress.json()
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    throw new Error('Failed to fetch plan progress.')
   }
 }
