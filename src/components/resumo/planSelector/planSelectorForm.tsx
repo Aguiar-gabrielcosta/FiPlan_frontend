@@ -32,9 +32,8 @@ export default function PlanSelectorForm({ data }: Props) {
         className="cursor-pointer rounded-lg border border-primaryDR p-2"
         aria-label="Selecione o período de análise"
         onChange={(e) => selectPlan(e.currentTarget.value)}
-        defaultValue=""
       >
-        <option value="" disabled>
+        <option value="" disabled selected={urlParams.get('plan') === null}>
           Selecione um plano
         </option>
         {data.map((plan) => {
