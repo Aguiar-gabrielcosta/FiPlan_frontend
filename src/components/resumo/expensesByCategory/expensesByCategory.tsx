@@ -1,4 +1,4 @@
-import { fecthExpensesPerCategory } from '@/app/lib/service/apiConsumer'
+import { fecthExpensesPerCategory } from '@/src/lib/service/apiConsumer'
 import Section from '../../section'
 import ExpenseInfo from './expenseInfo'
 

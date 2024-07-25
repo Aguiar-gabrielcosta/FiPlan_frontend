@@ -1,6 +1,6 @@
-import checkProgress from '@/app/lib/utils/checkProgress'
-import formatValue from '@/app/lib/utils/formatValue'
-import getAlertLevel from '@/app/lib/utils/getAlertLevel'
+import checkProgress from '@/src/lib/utils/checkProgress'
+import formatValue from '@/src/lib/utils/formatValue'
+import getAlertLevel from '@/src/lib/utils/getAlertLevel'
 
 interface ExpenseInfoProps {
   category: string

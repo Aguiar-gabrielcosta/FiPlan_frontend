@@ -1,7 +1,7 @@
-import formatValue from '@/app/lib/utils/formatValue'
+import { fecthPlanProgress } from '@/src/lib/service/apiConsumer'
 import Section from '../../section'
 import BudgetChart from './budgetChart'
-import { fecthPlanProgress } from '@/app/lib/service/apiConsumer'
+import formatValue from '@/src/lib/utils/formatValue'
 
 // const dataPH = {
 //   totaBudget: 10000,

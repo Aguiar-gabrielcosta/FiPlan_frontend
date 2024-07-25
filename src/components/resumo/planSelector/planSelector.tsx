@@ -1,4 +1,4 @@
-import { fetchPlans } from '@/app/lib/service/apiConsumer'
+import { fetchPlans } from '@/src/lib/service/apiConsumer'
 import SelectorBar from '../../optionsBar'
 import PlanSelectorForm from './planSelectorForm'
 

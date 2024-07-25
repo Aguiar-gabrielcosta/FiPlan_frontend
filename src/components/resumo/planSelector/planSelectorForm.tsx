@@ -1,7 +1,7 @@
 'use client'
 
-import { Plan } from '@/app/lib/definitions'
-import formatDate from '@/app/lib/utils/formatDate'
+import { Plan } from '@/src/lib/definitions'
+import formatDate from '@/src/lib/utils/formatDate'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 type Props = {
@@ -29,14 +29,21 @@ export default function PlanSelectorForm({ data }: Props) {
     <form action="" id="dashboardPlan">
       <select
         form="dashboardPlan"
-        className="rounded-lg border border-primaryDR p-2"
+        className="cursor-pointer rounded-lg border border-primaryDR p-2"
         aria-label="Selecione o período de análise"
         onChange={(e) => selectPlan(e.currentTarget.value)}
+        defaultValue=""
       >
-        <option value="">Selecione um plano</option>
+        <option value="" disabled>
+          Selecione um plano
+        </option>
         {data.map((plan) => {
           return (
-            <option key={plan.plan_id} value={plan.plan_id}>
+            <option
+              key={plan.plan_id}
+              value={plan.plan_id}
+              selected={plan.plan_id === urlParams.get('plan')}
+            >
               {`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}
             </option>
           )
