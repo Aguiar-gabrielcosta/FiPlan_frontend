@@ -1,6 +1,7 @@
 import {
   fecthExpensesPerCategory,
   fecthPlanProgress,
+  fetchCategories,
   fetchMonthlyBalance,
   fetchPlans,
 } from './apiConsumer'
@@ -11,6 +12,7 @@ export const Api = {
   plans: fetchPlans,
   planProgress: fecthPlanProgress,
   expensesPerCategory: fecthExpensesPerCategory,
+  categories: fetchCategories,
   addPlan,
   addCategory,
   addTransaction,

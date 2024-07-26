@@ -1,16 +1,34 @@
 'use client'
 
-import { newTransaction } from '@/src/lib/actions'
+import { ActionState, newTransaction } from '@/src/lib/actions'
+import { Category, Plan } from '@/src/lib/definitions'
+import formatDate from '@/src/lib/utils/formatDate'
 import { CircleMinus, CirclePlus, Plus, SendHorizonal, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
+import { SyncLoader } from 'react-spinners'
 
-export default function TransactionForm() {
+export default function TransactionForm({
+  plans,
+  categories,
+}: {
+  plans: Plan[]
+  categories: Category[]
+}) {
+  const initialState: ActionState = { message: null, errors: {} }
+  const [state, formAction] = useFormState(newTransaction, initialState)
+  const { pending } = useFormStatus()
   const [newPlan, setNewPlan] = useState(false)
   const [newCategory, setNewCategory] = useState(false)
+  const [planId, setPlanId] = useState('')
+
+  const validCategories = categories.filter(
+    (category) => category.plan_id === planId,
+  )
 
   return (
-    <form action={newTransaction} id="transactionForm">
+    <form action={formAction} id="transactionForm">
       <div className="flex w-[452px] flex-col justify-between gap-8 rounded-lg bg-neutralWhite p-4 drop-shadow-md">
         <div className="flex flex-col gap-4 rounded-lg bg-bgL p-4">
           {/* Valor da transação */}
@@ -79,18 +97,28 @@ export default function TransactionForm() {
                 form="transactionForm"
                 className={`rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD ${newPlan ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 aria-label="Selecione o plano"
-                defaultValue=""
+                value={planId}
                 name="planId"
                 disabled={newPlan}
+                onChange={(e) => setPlanId(e.target.value)}
               >
                 <option value="" disabled>
                   Selecione um plano
                 </option>
+                {plans.map((plan) => (
+                  <option
+                    key={plan.plan_id}
+                    value={plan.plan_id}
+                  >{`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}</option>
+                ))}
               </select>
               <button
                 type="button"
                 className="flex items-center gap-1 rounded-lg bg-primary px-2 text-neutralWhite transition-all hover:bg-primaryD"
-                onClick={() => setNewPlan(!newPlan)}
+                onClick={() => {
+                  setNewPlan(!newPlan)
+                  setPlanId('')
+                }}
               >
                 <Plus size={20} />
                 Novo plano
@@ -158,7 +186,7 @@ export default function TransactionForm() {
             <div className="flex justify-between">
               <select
                 form="transactionForm"
-                className={`rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD ${newCategory || newPlan ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={`rounded-lg border border-primaryDR px-2 py-1 text-sm first-letter:uppercase placeholder:text-primaryD ${newCategory || newPlan ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 aria-label="Selecione uma categoria"
                 name="categoryId"
                 defaultValue=""
@@ -167,6 +195,15 @@ export default function TransactionForm() {
                 <option value="" disabled>
                   Selecione uma categoria
                 </option>
+                {validCategories.map((category) => (
+                  <option
+                    className="capitalize"
+                    key={category.category_id}
+                    value={category.category_id}
+                  >
+                    {category.category}
+                  </option>
+                ))}
               </select>
               <button
                 type="button"
@@ -230,8 +267,9 @@ export default function TransactionForm() {
           <button
             type="submit"
             className="flex items-center gap-2 rounded-lg bg-primary px-2 py-1 text-neutralWhite"
+            disabled={pending}
           >
-            <SendHorizonal size={20} />
+            {pending ? <SyncLoader size={20} /> : <SendHorizonal size={20} />}
             Enviar
           </button>
         </div>

@@ -1,4 +1,5 @@
 import {
+  Category,
   ExpensesPerCategory,
   monthlyBalance,
   Plan,
@@ -54,5 +55,15 @@ export async function fecthExpensesPerCategory(
   } catch (error) {
     console.log('Databse error: ' + error)
     throw new Error('Failed to fetch expenses per category data.')
+  }
+}
+
+export async function fetchCategories(): Promise<Category[]> {
+  try {
+    const categories = await fetch(`${apiBaseURL}/category/data`)
+    return categories.json()
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    throw new Error('Failed to fetch categories.')
   }
 }

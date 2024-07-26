@@ -11,6 +11,13 @@ export type Plan = {
   end_date: string
 }
 
+export type Category = {
+  category_id: number
+  category: string
+  category_budget: number
+  plan_id: string
+}
+
 export type PlanProgress = {
   budget_value: number
   total_expenses: number

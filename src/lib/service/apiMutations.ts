@@ -19,7 +19,7 @@ export async function addPlan(
     }),
   })
 
-  console.log(res)
+  console.log('AddPlan' + res.ok)
 
   return res.json()
 }
@@ -41,7 +41,7 @@ export async function addCategory(
     }),
   })
 
-  console.log(res)
+  console.log('AddCategory' + res.ok)
 
   return res.json()
 }
@@ -65,7 +65,7 @@ export async function addTransaction(
     }),
   })
 
-  console.log(res)
+  console.log('AddTransaction' + res.ok)
 
   return res.json()
 }
