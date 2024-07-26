@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { LogOut } from 'lucide-react'
 import MenuNav from './menuNav'
 
-export default async function Menu() {
+export default function Menu() {
   return (
     <div className="flex w-[260px] flex-col p-2">
       <header className="rounded-lg bg-primaryDR p-2 text-neutralWhite">

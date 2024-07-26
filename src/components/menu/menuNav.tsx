@@ -9,7 +9,7 @@ const links = [
   {
     label: 'Planejamentos',
     icon: <Route />,
-    href: '/resumo/planejamentos',
+    href: '/resumo/planejamento',
   },
   { label: 'Histórico', icon: <History />, href: '/resumo/historico' },
 ]
