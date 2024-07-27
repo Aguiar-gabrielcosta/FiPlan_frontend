@@ -3,7 +3,7 @@
 import { ActionState, newTransaction } from '@/src/lib/actions'
 import { Category, Plan } from '@/src/lib/definitions'
 import formatDate from '@/src/lib/utils/formatDate'
-import { CircleMinus, CirclePlus, Plus, SendHorizonal, X } from 'lucide-react'
+import { CircleMinus, CirclePlus, SendHorizonal, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
@@ -19,9 +19,8 @@ export default function TransactionForm({
   const initialState: ActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(newTransaction, initialState)
   const { pending } = useFormStatus()
-  const [newPlan, setNewPlan] = useState(false)
-  const [newCategory, setNewCategory] = useState(false)
   const [planId, setPlanId] = useState('')
+  const [categoryId, setCategoryId] = useState('')
 
   const validCategories = categories.filter(
     (category) => category.plan_id === planId,
@@ -47,7 +46,16 @@ export default function TransactionForm({
               className="rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
               min={0}
               step={0.01}
+              aria-describedby="transactionValueError"
             />
+            <div id="transactionValueError" aria-live="polite">
+              {state.errors?.transactionValue &&
+                state.errors.transactionValue.map((error) => (
+                  <p className="text-sm font-medium text-alertRed" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </fieldset>
 
           {/* Tipo de gasto */}
@@ -62,6 +70,7 @@ export default function TransactionForm({
                   name="transactionType"
                   id="income"
                   value="income"
+                  aria-describedby="transactionTypeError"
                 />
                 <label
                   htmlFor="income"
@@ -77,6 +86,7 @@ export default function TransactionForm({
                   name="transactionType"
                   id="expense"
                   value="expense"
+                  aria-describedby="transactionTypeError"
                 />
                 <label
                   htmlFor="expense"
@@ -87,19 +97,27 @@ export default function TransactionForm({
                 </label>
               </div>
             </div>
+            <div className="mt-2" id="transactionTypeError" aria-live="polite">
+              {state.errors?.transactionType &&
+                state.errors.transactionType.map((error) => (
+                  <p className="text-sm font-medium text-alertRed" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </fieldset>
 
           {/* Plano */}
-          <fieldset className="flex flex-col gap-4">
+          <fieldset className="flex flex-col gap-2">
             <legend className="mb-2 font-medium text-primaryDR">Plano</legend>
-            <div className="flex justify-between">
+            <div className="block">
               <select
                 form="transactionForm"
-                className={`rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD ${newPlan ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={`w-full cursor-pointer rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD`}
                 aria-label="Selecione o plano"
                 value={planId}
                 name="planId"
-                disabled={newPlan}
+                aria-describedby="planIdError"
                 onChange={(e) => setPlanId(e.target.value)}
               >
                 <option value="" disabled>
@@ -112,85 +130,32 @@ export default function TransactionForm({
                   >{`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}</option>
                 ))}
               </select>
-              <button
-                type="button"
-                className="flex items-center gap-1 rounded-lg bg-primary px-2 text-neutralWhite transition-all hover:bg-primaryD"
-                onClick={() => {
-                  setNewPlan(!newPlan)
-                  setPlanId('')
-                }}
-              >
-                <Plus size={20} />
-                Novo plano
-              </button>
             </div>
-            {/* Formulário para adicionar novo plano */}
-            {newPlan && (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="budgetValue"
-                    className="font-medium text-primaryDR"
-                  >
-                    Orçamento
-                  </label>
-                  <input
-                    type="number"
-                    name="budgetValue"
-                    id="budgetValue"
-                    placeholder="Insira o orçamento do plano"
-                    className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                    min={0}
-                    step={0.01}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="startDate"
-                    className="font-medium text-primaryDR"
-                  >
-                    Data de início
-                  </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    id="startDate"
-                    placeholder="Insira a data de início"
-                    className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="endDate"
-                    className="font-medium text-primaryDR"
-                  >
-                    Data do fim
-                  </label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    id="endDate"
-                    placeholder="Insira a data do fim"
-                    className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                  />
-                </div>
-              </div>
-            )}
+            <div id="planIdError" aria-live="polite">
+              {state.errors?.planId &&
+                state.errors.planId.map((error) => (
+                  <p className="text-sm font-medium text-alertRed" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </fieldset>
 
           {/* Categoria */}
-          <fieldset className="flex flex-col gap-4">
+          <fieldset className="flex flex-col gap-2">
             <legend className="mb-2 font-medium text-primaryDR">
               Categoria
             </legend>
             <div className="flex justify-between">
               <select
                 form="transactionForm"
-                className={`rounded-lg border border-primaryDR px-2 py-1 text-sm first-letter:uppercase placeholder:text-primaryD ${newCategory || newPlan ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={`w-full rounded-lg border border-primaryDR px-2 py-1 text-sm first-letter:uppercase placeholder:text-primaryD ${planId ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                 aria-label="Selecione uma categoria"
                 name="categoryId"
-                defaultValue=""
-                disabled={newCategory || newPlan}
+                aria-describedby="categoryIdError"
+                value={categoryId}
+                disabled={planId === ''}
+                onChange={(e) => setCategoryId(e.target.value)}
               >
                 <option value="" disabled>
                   Selecione uma categoria
@@ -205,53 +170,28 @@ export default function TransactionForm({
                   </option>
                 ))}
               </select>
-              <button
-                type="button"
-                className="flex items-center gap-1 rounded-lg bg-primary px-2 text-neutralWhite transition-all hover:bg-primaryD"
-                onClick={() => setNewCategory(!newCategory)}
-              >
-                <Plus size={20} />
-                Nova categoria
-              </button>
             </div>
-            {/* Formulário para adicionar nova categoria */}
-            {newCategory && (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="category"
-                    className="font-medium text-primaryDR"
-                  >
-                    Nome
-                  </label>
-                  <input
-                    type="text"
-                    name="category"
-                    id="category"
-                    placeholder="Insira o nome da categoria"
-                    className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="categoryBudget"
-                    className="font-medium text-primaryDR"
-                  >
-                    Orçamento
-                  </label>
-                  <input
-                    type="number"
-                    name="categoryBudget"
-                    id="categoryBudget"
-                    placeholder="Insira o orçamento da categoria"
-                    className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                    min={0}
-                    step={0.01}
-                  />
-                </div>
-              </div>
-            )}
+            <div id="categoryIdError" aria-live="polite">
+              {state.errors?.categoryId &&
+                state.errors.categoryId.map((error) => (
+                  <p className="text-sm font-medium text-alertRed" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </fieldset>
+        </div>
+
+        {/* Mensagem de falha do formulário */}
+        <div className="text-center">
+          {state.message && (
+            <p
+              className="text-sm font-medium text-alertRed"
+              key={state.message}
+            >
+              {state.message}
+            </p>
+          )}
         </div>
 
         {/* Buttons */}
