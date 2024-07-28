@@ -6,28 +6,12 @@ import formatDate from '@/src/lib/utils/formatDate'
 import { Plan } from '@/src/lib/definitions'
 import { useFormState, useFormStatus } from 'react-dom'
 import { CategoryActionState, newCategory } from '@/src/lib/actions'
-import Link from 'next/link'
 
 export default function CategoryForm({ plans }: { plans: Plan[] }) {
   const initialState: CategoryActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(newCategory, initialState)
   const { pending } = useFormStatus()
   const [planId, setPlanId] = useState('')
-
-  if (!plans) {
-    return (
-      <div className="flex flex-col items-center gap-2">
-        <p>Não foi possível carregar seus planos.</p>
-        <p>Caso não os tenha ainda, crie através do link abaixo.</p>
-        <Link
-          className="m-2 rounded-lg bg-primary p-2 text-neutralWhite"
-          href={'/resumo/planejamento/plano'}
-        >
-          Planos
-        </Link>
-      </div>
-    )
-  }
 
   return (
     <Form.Root action={formAction} id="categoryForm">
