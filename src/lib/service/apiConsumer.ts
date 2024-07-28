@@ -17,7 +17,7 @@ export async function fetchMonthlyBalance(): Promise<{
     const monthlyBalanceData = await fetch(
       `${apiBaseURL}/transaction/balance/${userId}`,
     )
-    return monthlyBalanceData.json()
+    return { data: await monthlyBalanceData.json() }
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar o balanço mensal.' }
@@ -30,46 +30,54 @@ export async function fetchPlans(): Promise<{
 }> {
   try {
     const plans = await fetch(`${apiBaseURL}/plan/${userId}`)
-    return plans.json()
+    return { data: await plans.json() }
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar os planos.' }
   }
 }
 
-export async function fecthPlanProgress(planId: string): Promise<PlanProgress> {
+export async function fecthPlanProgress(
+  planId: string,
+): Promise<{ data?: PlanProgress; message?: string }> {
   try {
     const planProgress = await fetch(
       `${apiBaseURL}/plan/progress/${userId}/${planId}`,
     )
-    return planProgress.json()
+    return { data: await planProgress.json() }
   } catch (error) {
     console.log('Databse error: ' + error)
-    throw new Error('Failed to fetch plan progress.')
+    return { message: 'Não foi possível recuperar o progresso do plano.' }
   }
 }
 
 export async function fecthExpensesPerCategory(
   planId: string,
-): Promise<ExpensesPerCategory[]> {
+): Promise<{ data?: ExpensesPerCategory[]; message?: string }> {
   try {
     const expensesPerCategory = await fetch(
       `${apiBaseURL}/transaction/expenses/category/${userId}/${planId}`,
     )
 
-    return expensesPerCategory.json()
+    return { data: await expensesPerCategory.json() }
   } catch (error) {
     console.log('Databse error: ' + error)
-    throw new Error('Failed to fetch expenses per category data.')
+    return {
+      message: 'Não foi possível recuperar a relação de categoria e gastos.',
+    }
   }
 }
 
-export async function fetchCategories(): Promise<Category[]> {
+export async function fetchCategories(): Promise<{
+  data?: Category[]
+  message?: string
+}> {
   try {
     const categories = await fetch(`${apiBaseURL}/category/data`)
-    return categories.json()
+
+    return { data: await categories.json() }
   } catch (error) {
     console.log('Databse error: ' + error)
-    throw new Error('Failed to fetch categories.')
+    return { message: 'Não foi possível recuperar as categorias.' }
   }
 }
