@@ -1,4 +1,4 @@
-import { CircleMinus, CirclePlus } from 'lucide-react'
+import { CircleDollarSign, Package, Route } from 'lucide-react'
 import Section from '../section'
 
 import Link from 'next/link'
@@ -8,18 +8,25 @@ export default function FastActions() {
     <Section width="fit" title="Acesso Rápido">
       <div className="flex h-full gap-2">
         <Link
-          className="flex items-center gap-1 rounded-lg border border-primaryDR p-2 font-medium text-alertGreen"
-          href={'resumo/planejamento/transacao'}
+          className="flex flex-col items-center justify-center gap-1 rounded-lg bg-primaryD p-1 font-medium text-neutralWhite hover:bg-primary"
+          href={'resumo/planejamento/plano'}
         >
-          <CirclePlus width={48} height={48} />
-          <p className="w-[100px] text-center">Adicionar Receita</p>
+          <Route width={48} height={40} />
+          <p className="w-[100px] text-center">+ Plano</p>
         </Link>
         <Link
-          className="flex items-center gap-1 rounded-lg border border-primaryDR p-2 font-medium text-alertRed"
+          className="flex flex-col items-center justify-center gap-1 rounded-lg bg-primaryD p-1 font-medium text-neutralWhite hover:bg-primary"
+          href={'resumo/planejamento/categoria'}
+        >
+          <Package width={40} height={40} />
+          <p className="w-[100px] text-center">+ Categoria</p>
+        </Link>
+        <Link
+          className="flex flex-col items-center justify-center gap-1 rounded-lg bg-primaryD p-1 font-medium text-neutralWhite hover:bg-primary"
           href={'resumo/planejamento/transacao'}
         >
-          <CircleMinus width={48} height={48} />
-          <p className="w-[100px] text-center">Adicionar Gasto</p>
+          <CircleDollarSign width={40} height={40} />
+          <p className="w-[100px] text-center">+ Transação</p>
         </Link>
       </div>
     </Section>
