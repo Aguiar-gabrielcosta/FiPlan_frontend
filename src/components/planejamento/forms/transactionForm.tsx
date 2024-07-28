@@ -121,12 +121,13 @@ export default function TransactionForm({
               <option value="" disabled>
                 Selecione um plano
               </option>
-              {plans.map((plan) => (
-                <option
-                  key={plan.plan_id}
-                  value={plan.plan_id}
-                >{`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}</option>
-              ))}
+              {plans &&
+                plans.map((plan) => (
+                  <option
+                    key={plan.plan_id}
+                    value={plan.plan_id}
+                  >{`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}</option>
+                ))}
             </select>
           </div>
           <div id="planIdError" aria-live="polite">
@@ -156,15 +157,16 @@ export default function TransactionForm({
               <option value="" disabled>
                 Selecione uma categoria
               </option>
-              {validCategories.map((category) => (
-                <option
-                  className="capitalize"
-                  key={category.category_id}
-                  value={category.category_id}
-                >
-                  {category.category}
-                </option>
-              ))}
+              {validCategories &&
+                validCategories.map((category) => (
+                  <option
+                    className="capitalize"
+                    key={category.category_id}
+                    value={category.category_id}
+                  >
+                    {category.category}
+                  </option>
+                ))}
             </select>
           </div>
           <div id="categoryIdError" aria-live="polite">

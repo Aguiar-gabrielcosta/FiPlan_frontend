@@ -83,12 +83,13 @@ export default function CategoryForm({ plans }: { plans: Plan[] }) {
               <option value="" disabled>
                 Selecione um plano
               </option>
-              {plans.map((plan) => (
-                <option
-                  key={plan.plan_id}
-                  value={plan.plan_id}
-                >{`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}</option>
-              ))}
+              {plans &&
+                plans.map((plan) => (
+                  <option
+                    key={plan.plan_id}
+                    value={plan.plan_id}
+                  >{`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}</option>
+                ))}
             </select>
           </div>
           <div id="planIdError" aria-live="polite">
