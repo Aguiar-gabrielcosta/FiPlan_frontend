@@ -157,7 +157,7 @@ export default function TransactionForm({
               <option value="" disabled>
                 Selecione uma categoria
               </option>
-              {validCategories &&
+              {categories &&
                 validCategories.map((category) => (
                   <option
                     className="capitalize"
