@@ -14,10 +14,9 @@ export async function fetchMonthlyBalance(): Promise<{
   message?: string
 }> {
   try {
-    const monthlyBalanceData = await fetch(
-      `${apiBaseURL}/transaction/balance/${userId}`,
-    )
-    return { data: await monthlyBalanceData.json() }
+    const res = await fetch(`${apiBaseURL}/transaction/balance/${userId}`)
+    const monthlyBalance = await res.json()
+    return { data: monthlyBalance }
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar o balanço mensal.' }
@@ -29,8 +28,9 @@ export async function fetchPlans(): Promise<{
   message?: string
 }> {
   try {
-    const plans = await fetch(`${apiBaseURL}/plan/${userId}`)
-    return { data: await plans.json() }
+    const res = await fetch(`${apiBaseURL}/plan/${userId}`)
+    const plans = await res.json()
+    return { data: Array.isArray(plans) ? plans : [] }
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar os planos.' }
@@ -41,10 +41,9 @@ export async function fecthPlanProgress(
   planId: string,
 ): Promise<{ data?: PlanProgress; message?: string }> {
   try {
-    const planProgress = await fetch(
-      `${apiBaseURL}/plan/progress/${userId}/${planId}`,
-    )
-    return { data: await planProgress.json() }
+    const res = await fetch(`${apiBaseURL}/plan/progress/${userId}/${planId}`)
+    const planProgress = await res.json()
+    return { data: planProgress }
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar o progresso do plano.' }
@@ -55,11 +54,14 @@ export async function fecthExpensesPerCategory(
   planId: string,
 ): Promise<{ data?: ExpensesPerCategory[]; message?: string }> {
   try {
-    const expensesPerCategory = await fetch(
+    const res = await fetch(
       `${apiBaseURL}/transaction/expenses/category/${userId}/${planId}`,
     )
+    const expensesPerCategory = await res.json()
 
-    return { data: await expensesPerCategory.json() }
+    return {
+      data: Array.isArray(expensesPerCategory) ? expensesPerCategory : [],
+    }
   } catch (error) {
     console.log('Databse error: ' + error)
     return {
@@ -73,9 +75,9 @@ export async function fetchCategories(): Promise<{
   message?: string
 }> {
   try {
-    const categories = await fetch(`${apiBaseURL}/category/data`)
-
-    return { data: await categories.json() }
+    const res = await fetch(`${apiBaseURL}/category/data`)
+    const categories = await res.json()
+    return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar as categorias.' }
