@@ -9,7 +9,10 @@ import {
 const apiBaseURL = process.env.API_URL
 const userId = process.env.TEST_USER
 
-export async function fetchMonthlyBalance(): Promise<monthlyBalance> {
+export async function fetchMonthlyBalance(): Promise<{
+  data?: monthlyBalance
+  message?: string
+}> {
   try {
     const monthlyBalanceData = await fetch(
       `${apiBaseURL}/transaction/balance/${userId}`,
@@ -17,17 +20,20 @@ export async function fetchMonthlyBalance(): Promise<monthlyBalance> {
     return monthlyBalanceData.json()
   } catch (error) {
     console.log('Databse error: ' + error)
-    throw new Error('Failed to fetch balance')
+    return { message: 'Não foi possível recuperar o balanço mensal.' }
   }
 }
 
-export async function fetchPlans(): Promise<Plan[]> {
+export async function fetchPlans(): Promise<{
+  data?: Plan[]
+  message?: string
+}> {
   try {
     const plans = await fetch(`${apiBaseURL}/plan/${userId}`)
     return plans.json()
   } catch (error) {
     console.log('Databse error: ' + error)
-    throw new Error('Failed to fetch plans')
+    return { message: 'Não foi possível recuperar os planos.' }
   }
 }
 
