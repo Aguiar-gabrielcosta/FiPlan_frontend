@@ -1,5 +1,5 @@
 import formatValue from '@/src/lib/utils/formatValue'
-import Section from '../section'
+import Section from '../global/section'
 import { fetchMonthlyBalance } from '@/src/lib/service/apiConsumer'
 
 export default async function MonthlyBalance() {

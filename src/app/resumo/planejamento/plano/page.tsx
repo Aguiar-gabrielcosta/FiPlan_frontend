@@ -1,4 +1,4 @@
-import PlanForm from '@/src/components/transacao/planForm'
+import PlanForm from '@/src/components/planejamento/forms/planForm'
 
 export default async function Plano() {
   return (

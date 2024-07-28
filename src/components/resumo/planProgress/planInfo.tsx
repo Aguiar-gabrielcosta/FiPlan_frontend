@@ -1,5 +1,5 @@
 import { fecthPlanProgress } from '@/src/lib/service/apiConsumer'
-import Section from '../../section'
+import Section from '../../global/section'
 import BudgetChart from './budgetChart'
 import formatValue from '@/src/lib/utils/formatValue'
 

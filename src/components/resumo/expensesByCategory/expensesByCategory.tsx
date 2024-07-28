@@ -1,5 +1,5 @@
 import { fecthExpensesPerCategory } from '@/src/lib/service/apiConsumer'
-import Section from '../../section'
+import Section from '../../global/section'
 import ExpenseInfo from './expenseInfo'
 
 // const data = [

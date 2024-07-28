@@ -1,12 +1,12 @@
 'use client'
 
-import { ActionState, newTransaction } from '@/src/lib/actions'
+import { TransactionActionState, newTransaction } from '@/src/lib/actions'
 import { Category, Plan } from '@/src/lib/definitions'
 import formatDate from '@/src/lib/utils/formatDate'
 import { CircleMinus, CirclePlus } from 'lucide-react'
 import { useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
-import { Form } from '../form'
+import { Form } from '../../global/form'
 
 export default function TransactionForm({
   plans,
@@ -15,7 +15,7 @@ export default function TransactionForm({
   plans: Plan[]
   categories: Category[]
 }) {
-  const initialState: ActionState = { message: null, errors: {} }
+  const initialState: TransactionActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(newTransaction, initialState)
   const { pending } = useFormStatus()
   const [planId, setPlanId] = useState('')

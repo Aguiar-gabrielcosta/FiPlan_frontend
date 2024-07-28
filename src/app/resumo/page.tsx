@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import MonthlyBalance from '../../components/resumo/monthlyBalance'
-import Loading from '../../components/loading'
+import Loading from '../../components/global/loading'
 import FastActions from '../../components/resumo/fastActions'
 import PlanSelector from '../../components/resumo/planSelector/planSelector'
 import ExpensesByCategory from '../../components/resumo/expensesByCategory/expensesByCategory'

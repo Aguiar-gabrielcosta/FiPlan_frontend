@@ -1,5 +1,5 @@
 import { fetchPlans } from '@/src/lib/service/apiConsumer'
-import SelectorBar from '../../optionsBar'
+import SelectorBar from '../../global/optionsBar'
 import PlanSelectorForm from './planSelectorForm'
 
 export default async function PlanSelector() {

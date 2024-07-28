@@ -1,4 +1,4 @@
-import TransactionForm from '@/src/components/transacao/transactionForm'
+import TransactionForm from '@/src/components/planejamento/forms/transactionForm'
 import { Api } from '@/src/lib/service/api'
 
 export default async function Transacao() {

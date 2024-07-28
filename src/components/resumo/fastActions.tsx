@@ -1,5 +1,5 @@
 import { CircleDollarSign, Package, Route } from 'lucide-react'
-import Section from '../section'
+import Section from '../global/section'
 
 import Link from 'next/link'
 

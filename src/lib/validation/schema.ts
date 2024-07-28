@@ -15,3 +15,16 @@ export const NewTransactionSchema = z.object({
     invalid_type_error: 'Por favor, selecione um tipo de gasto.',
   }),
 })
+
+export const NewCategorySchema = z.object({
+  planId: z.string({ invalid_type_error: 'Por favor, selecione um plano.' }),
+  category: z
+    .string({
+      invalid_type_error: 'Por favor, insira um nome para a categoria.',
+    })
+    .min(1, { message: 'Por favor, insira um nome para a categoria.' })
+    .max(50, { message: 'Deve conter no máximo 50 caracteres.' }),
+  categoryBudget: z.coerce
+    .number()
+    .gt(0, { message: 'Por favor, insira um valor maior que R$ 0.' }),
+})
