@@ -19,8 +19,6 @@ export async function addPlan(
     }),
   })
 
-  console.log('AddPlan' + res.ok)
-
   return res.json()
 }
 
@@ -40,8 +38,6 @@ export async function addCategory(
       category_budget: categoryBudget,
     }),
   })
-
-  console.log('AddCategory' + res.ok)
 
   return res.json()
 }
@@ -64,8 +60,6 @@ export async function addTransaction(
       transaction_date: new Date().toISOString(),
     }),
   })
-
-  console.log('AddTransaction' + res.ok)
 
   return res.json()
 }

@@ -20,8 +20,6 @@ export async function newTransaction(
   prevState: ActionState,
   formData: FormData,
 ) {
-  console.log(formData)
-
   // Validação
   const validatedFields = validateNewTransaction(formData)
 

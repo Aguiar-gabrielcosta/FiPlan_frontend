@@ -188,7 +188,7 @@ export default function TransactionForm({
         </p>
       )}
 
-      {/* Buttons */}
+      {/* Botões de cancelar e enviar */}
       <Form.Buttons pending={pending} />
     </Form.Root>
   )
