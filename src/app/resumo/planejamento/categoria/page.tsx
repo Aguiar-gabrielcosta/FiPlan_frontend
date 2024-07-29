@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default async function Categoria() {
   const plans = await Api.plans()
 
-  if (!plans.data) {
+  if (!plans.data || plans.data.length === 0) {
     return (
       <div className="flex min-h-full min-w-full items-center justify-center">
         <div className="flex flex-col items-center gap-2">

@@ -19,7 +19,11 @@ export async function addPlan(
     }),
   })
 
-  return res.json()
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Database error: Não foi possível adicionar o plano.')
+  }
 }
 
 export async function addCategory(
@@ -40,7 +44,11 @@ export async function addCategory(
     }),
   })
 
-  return res.json()
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Database error: Não foi possível adicionar a categoria')
+  }
 }
 
 export async function addTransaction(
@@ -62,5 +70,9 @@ export async function addTransaction(
     }),
   })
 
-  return res.json()
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Database error: Não foi possível adicionar a transação.')
+  }
 }

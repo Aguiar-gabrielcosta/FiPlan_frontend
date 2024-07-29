@@ -6,7 +6,7 @@ export default async function Transacao() {
   const plans = await Api.plans()
   const categories = await Api.categories()
 
-  if (!plans.data) {
+  if (!plans.data || plans.data.length === 0) {
     return (
       <div className="flex min-h-full min-w-full items-center justify-center">
         <div className="flex flex-col items-center gap-2">
@@ -23,7 +23,7 @@ export default async function Transacao() {
     )
   }
 
-  if (!categories.data) {
+  if (!categories.data || categories.data.length === 0) {
     return (
       <div className="flex min-h-full min-w-full items-center justify-center">
         <div className="flex flex-col items-center gap-2">
