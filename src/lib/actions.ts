@@ -70,8 +70,6 @@ export async function newCategory(
   prevState: CategoryActionState,
   formData: FormData,
 ) {
-  console.log(formData)
-
   // Validação
   const validatedFields = validateCategory(formData)
 

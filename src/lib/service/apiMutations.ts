@@ -1,5 +1,5 @@
 const apiBaseURL = process.env.API_URL
-const userId = process.env.TEST_USER
+const userId = process.env.TEST_USER_FRESH
 
 export async function addPlan(
   budgetValue: number,
@@ -33,6 +33,7 @@ export async function addCategory(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      user_id: userId,
       plan_id: planId,
       category,
       category_budget: categoryBudget,

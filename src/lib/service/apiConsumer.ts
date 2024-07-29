@@ -7,7 +7,7 @@ import {
 } from '../definitions'
 
 const apiBaseURL = process.env.API_URL
-const userId = process.env.TEST_USER
+const userId = process.env.TEST_USER_FRESH
 
 export async function fetchMonthlyBalance(): Promise<{
   data?: monthlyBalance
@@ -16,6 +16,7 @@ export async function fetchMonthlyBalance(): Promise<{
   try {
     const res = await fetch(`${apiBaseURL}/transaction/balance/${userId}`)
     const monthlyBalance = await res.json()
+
     return { data: monthlyBalance }
   } catch (error) {
     console.log('Databse error: ' + error)
@@ -30,6 +31,7 @@ export async function fetchPlans(): Promise<{
   try {
     const res = await fetch(`${apiBaseURL}/plan/${userId}`)
     const plans = await res.json()
+
     return { data: Array.isArray(plans) ? plans : [] }
   } catch (error) {
     console.log('Databse error: ' + error)
@@ -43,6 +45,7 @@ export async function fecthPlanProgress(
   try {
     const res = await fetch(`${apiBaseURL}/plan/progress/${userId}/${planId}`)
     const planProgress = await res.json()
+
     return { data: planProgress }
   } catch (error) {
     console.log('Databse error: ' + error)
@@ -77,6 +80,7 @@ export async function fetchCategories(): Promise<{
   try {
     const res = await fetch(`${apiBaseURL}/category/${userId}`)
     const categories = await res.json()
+
     return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
     console.log('Databse error: ' + error)

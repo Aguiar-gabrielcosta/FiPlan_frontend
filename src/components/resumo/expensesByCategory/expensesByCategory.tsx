@@ -23,6 +23,18 @@ export default async function ExpensesByCategory({
     )
   }
 
+  if (expensesByCategory.data.length === 0) {
+    return (
+      <Section title="Gastos por categoria" width="fit">
+        <>
+          <p className="mt-2 text-center">
+            Não há categorias e/ou gastos cadastrados.
+          </p>
+        </>
+      </Section>
+    )
+  }
+
   return (
     <Section title="Gastos por categoria" width="fit">
       <div className="flex flex-col gap-2">
