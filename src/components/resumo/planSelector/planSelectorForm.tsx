@@ -34,16 +34,12 @@ export default function PlanSelectorForm({ data }: Props) {
         value={urlParams.get('plan') || ''}
         onChange={(e) => selectPlan(e.currentTarget.value)}
       >
-        <option value="" disabled selected={urlParams.get('plan') === null}>
+        <option value="" disabled>
           Selecione um plano
         </option>
         {data.map((plan) => {
           return (
-            <option
-              key={plan.plan_id}
-              value={plan.plan_id}
-              selected={plan.plan_id === urlParams.get('plan')}
-            >
+            <option key={plan.plan_id} value={plan.plan_id}>
               {`${formatDate(plan.start_date)} até ${formatDate(plan.end_date)}`}
             </option>
           )

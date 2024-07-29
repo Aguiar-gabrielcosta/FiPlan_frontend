@@ -21,12 +21,14 @@ export default function Resumo({
           <MonthlyBalance />
         </Suspense>
         <FastActions />
-        <PlanSelector />
+        <Suspense fallback={<Loading />}>
+          <PlanSelector />
+        </Suspense>
       </div>
       {planId ? (
         <div className="flex flex-wrap items-start gap-2">
-          <ExpensesByCategory planId={planId} />
-          <Suspense fallback={<Loading />}>
+          <Suspense key={planId} fallback={<Loading />}>
+            <ExpensesByCategory planId={planId} />
             <BudgetInfo planId={planId} />
           </Suspense>
         </div>
