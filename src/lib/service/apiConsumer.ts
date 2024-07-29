@@ -75,7 +75,7 @@ export async function fetchCategories(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/data`)
+    const res = await fetch(`${apiBaseURL}/category/${userId}`)
     const categories = await res.json()
     return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
