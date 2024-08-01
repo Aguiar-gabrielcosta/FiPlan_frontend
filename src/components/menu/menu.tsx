@@ -13,7 +13,7 @@ export default function Menu() {
         </div>
         <div className="flex justify-end gap-1 font-displayFont leading-[19px] text-primaryLR">
           <Image src={'/logo-64.svg'} width={16} height={16} alt="FiPlan" />
-          FiPlan
+          <h1>FiPlan</h1>
         </div>
       </header>
       <nav className="flex h-full flex-col justify-between">

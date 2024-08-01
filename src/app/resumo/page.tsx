@@ -34,9 +34,9 @@ export default function Resumo({
         </div>
       ) : (
         <div>
-          <h1 className="mt-8 h-full text-center text-lg font-medium text-primaryDR">
+          <p className="mt-8 h-full text-center text-lg font-medium text-primaryDR">
             Selecione um plano na barra acima, ou crie um novo.
-          </h1>
+          </p>
         </div>
       )}
     </div>
