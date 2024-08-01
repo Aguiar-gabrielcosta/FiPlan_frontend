@@ -38,16 +38,22 @@ export default async function planInfo({ planId }: { planId: string }) {
   } = planProgress.data
 
   const displayData = (): { header: string; value: string }[] => {
-    const month = new Date(startDate).getMonth()
-    const year = new Date(endDate).getFullYear()
+    const start = new Date(startDate).toLocaleString('pt-br', {
+      day: '2-digit',
+      month: '2-digit',
+    })
+    const end = new Date(endDate).toLocaleString('pt-br', {
+      day: '2-digit',
+      month: '2-digit',
+    })
 
     return [
       {
-        header: `Orçamento - ${month}/${year}`,
+        header: `Orçamento: ${start} - ${end}`,
         value: formatValue(budgetValue),
       },
       {
-        header: `Gastos - ${month}/${year}`,
+        header: `Gastos: ${start} - ${end}`,
         value: formatValue(totalExpenses),
       },
     ]

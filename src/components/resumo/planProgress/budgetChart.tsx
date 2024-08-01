@@ -23,7 +23,7 @@ export default function budgetChart({
   }
 
   const { alert } = getAlertLevel(percentage, acceptable)
-  const progress = checkProgress(percentage) * 100
+  const progress = parseInt((checkProgress(percentage) * 100).toFixed(0))
 
   const radius = 50
   const circumference = 2 * Math.PI * radius
