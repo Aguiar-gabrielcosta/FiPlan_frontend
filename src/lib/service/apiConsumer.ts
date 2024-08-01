@@ -15,6 +15,11 @@ export async function fetchMonthlyBalance(): Promise<{
 }> {
   try {
     const res = await fetch(`${apiBaseURL}/transaction/balance/${userId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
     const monthlyBalance = await res.json()
 
     return { data: monthlyBalance }
@@ -30,6 +35,11 @@ export async function fetchPlans(): Promise<{
 }> {
   try {
     const res = await fetch(`${apiBaseURL}/plan/${userId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
     const plans = await res.json()
 
     return { data: Array.isArray(plans) ? plans : [] }
@@ -44,6 +54,11 @@ export async function fecthPlanProgress(
 ): Promise<{ data?: PlanProgress; message?: string }> {
   try {
     const res = await fetch(`${apiBaseURL}/plan/progress/${userId}/${planId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
     const planProgress = await res.json()
 
     return { data: planProgress }
@@ -60,6 +75,11 @@ export async function fecthExpensesPerCategory(
     const res = await fetch(
       `${apiBaseURL}/transaction/expenses/category/${userId}/${planId}`,
     )
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
     const expensesPerCategory = await res.json()
 
     return {
@@ -79,6 +99,11 @@ export async function fetchCategories(): Promise<{
 }> {
   try {
     const res = await fetch(`${apiBaseURL}/category/${userId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
     const categories = await res.json()
 
     return { data: Array.isArray(categories) ? categories : [] }
