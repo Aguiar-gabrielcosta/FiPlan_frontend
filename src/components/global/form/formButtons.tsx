@@ -1,6 +1,5 @@
-import { SendHorizonal, X } from 'lucide-react'
+import { Loader2, SendHorizonal, X } from 'lucide-react'
 import Link from 'next/link'
-import { SyncLoader } from 'react-spinners'
 
 interface FormButtonProps {
   pending: boolean
@@ -22,7 +21,11 @@ export default function FormButtons({ pending }: FormButtonProps) {
         className="flex items-center gap-2 rounded-lg bg-primary px-2 py-1 text-neutralWhite"
         disabled={pending}
       >
-        {pending ? <SyncLoader size={20} /> : <SendHorizonal size={20} />}
+        {pending ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          <SendHorizonal size={20} />
+        )}
         Enviar
       </button>
     </div>

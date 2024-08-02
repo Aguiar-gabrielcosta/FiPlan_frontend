@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { Api } from './service/api'
 import { validateNewTransaction } from './validation/validateTransaction'
 import { validateCategory } from './validation/validateCategory'
+import { validatePlan } from './validation/validatePlan'
 
 export type TransactionActionState = {
   errors?: {
@@ -104,5 +105,54 @@ export async function newCategory(
   revalidatePath('/resumo')
   revalidatePath('/resumo/planejamento')
   revalidatePath('/resumo/planejamento/transacao')
+  redirect('/resumo/planejamento')
+}
+
+export type PlanActionState = {
+  errors?: {
+    budgetValue?: string[]
+    startDate?: string[]
+    endDate?: string[]
+  }
+  message?: string | null
+}
+
+export async function newPlan(prevState: PlanActionState, formData: FormData) {
+  // Validação
+  const validatedFields = validatePlan(formData)
+
+  // Caso não forem válidas as entradas retorna o erro
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message:
+        'Não foi possível registrar o novo plano. Revise os dados acima.',
+    }
+  }
+
+  // Sendo válido, realiza as operações para envio dos dados para a API.
+  const { budgetValue, endDate, startDate } = validatedFields.data
+
+  console.log(startDate)
+
+  try {
+    const { plan_id: planId } = await Api.addPlan(
+      budgetValue,
+      startDate,
+      endDate,
+    )
+
+    console.log('Novo plano registrado, id: ' + planId)
+  } catch {
+    return {
+      message: 'Não foi possível registrar a nova categoria.',
+    }
+  }
+
+  // Revalida o cache da aplicação e redireciona o usuário para a página de planjejamento
+  revalidatePath('/resumo')
+  revalidatePath('/resumo/planejamento')
+  revalidatePath('/resumo/planejamento/transacao')
+  revalidatePath('/resumo/planejamento/categoria')
   redirect('/resumo/planejamento')
 }
