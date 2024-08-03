@@ -52,4 +52,5 @@ export const NewPlanSchema = z.object({
     .transform((date) => {
       return date.toISOString()
     }),
+  categories: z.array(NewCategorySchema.omit({ planId: true })),
 })
