@@ -144,7 +144,7 @@ export async function newPlan(prevState: PlanActionState, formData: FormData) {
   //   console.log('Novo plano registrado, id: ' + planId)
   // } catch {
   //   return {
-  //     message: 'Não foi possível registrar a nova categoria.',
+  //     message: 'Não foi possível registrar o novo plano.',
   //   }
   // }
 
