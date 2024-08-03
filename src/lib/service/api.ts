@@ -5,7 +5,12 @@ import {
   fetchMonthlyBalance,
   fetchPlans,
 } from './apiConsumer'
-import { addCategory, addPlan, addTransaction } from './apiMutations'
+import {
+  addCategory,
+  addCategoryBatch,
+  addPlan,
+  addTransaction,
+} from './apiMutations'
 
 export const Api = {
   monthlyBalance: fetchMonthlyBalance,
@@ -15,5 +20,6 @@ export const Api = {
   categories: fetchCategories,
   addPlan,
   addCategory,
+  addCategoryBatch,
   addTransaction,
 }

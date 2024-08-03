@@ -132,21 +132,31 @@ export async function newPlan(prevState: PlanActionState, formData: FormData) {
   }
 
   // Sendo válido, realiza as operações para envio dos dados para a API.
-  // const { budgetValue, endDate, startDate, categories } = validatedFields.data
+  const { budgetValue, endDate, startDate, categories } = validatedFields.data
 
-  // try {
-  //   const { plan_id: planId } = await Api.addPlan(
-  //     budgetValue,
-  //     startDate,
-  //     endDate,
-  //   )
+  try {
+    const { plan_id: planId } = await Api.addPlan(
+      budgetValue,
+      startDate,
+      endDate,
+    )
 
-  //   console.log('Novo plano registrado, id: ' + planId)
-  // } catch {
-  //   return {
-  //     message: 'Não foi possível registrar o novo plano.',
-  //   }
-  // }
+    console.log('Novo plano registrado, id: ' + planId)
+
+    try {
+      const ids = await Api.addCategoryBatch(planId, categories)
+
+      console.log('Novas categorias registradas, ids: ' + ids)
+    } catch {
+      return {
+        message: 'Não foi possível registrar as novas categorias.',
+      }
+    }
+  } catch {
+    return {
+      message: 'Não foi possível registrar o novo plano.',
+    }
+  }
 
   // Revalida o cache da aplicação e redireciona o usuário para a página de planjejamento
   revalidatePath('/resumo')

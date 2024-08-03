@@ -76,3 +76,35 @@ export async function addTransaction(
     throw new Error('Database error: Não foi possível adicionar a transação.')
   }
 }
+
+export async function addCategoryBatch(
+  planId: string,
+  categoryArray: {
+    category: string
+    categoryBudget: number
+  }[],
+) {
+  const categories = categoryArray.map((category) => {
+    return {
+      user_id: userId,
+      plan_id: planId,
+      category: category.category,
+      category_budget: category.categoryBudget,
+    }
+  })
+
+  const res = await fetch(`${apiBaseURL}/category/data/batch`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ categories }),
+  })
+
+  if (res.ok) {
+    const ids = await res.json()
+    return ids.map((id: { category_id: number }) => id.category_id)
+  } else {
+    throw new Error('Database error: Não foi possível adicionar a categoria')
+  }
+}

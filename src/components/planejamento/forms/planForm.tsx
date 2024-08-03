@@ -221,14 +221,16 @@ export default function PlanForm() {
           </fieldset>
         </div>
 
-        <div id="categoriesError" aria-live="polite">
-          {state.errors?.categories && (
-            <p className="text-sm font-medium text-alertRed">
-              Por favor, todas as categorias devem ser nomeadas e possuir
-              orçamento maior que R$ 0.
-            </p>
-          )}
-        </div>
+        {state.errors?.categories && (
+          <p
+            className="text-sm font-medium text-alertRed"
+            id="categoriesError"
+            aria-live="polite"
+          >
+            Por favor, todas as categorias devem ser nomeadas e possuir
+            orçamento maior que R$ 0.
+          </p>
+        )}
       </Form.InputArea>
 
       {/* Mensagem de falha do formulário */}
