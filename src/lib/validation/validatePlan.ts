@@ -18,7 +18,5 @@ export function validatePlan(formData: FormData) {
     categories,
   })
 
-  console.log(categories)
-
   return parsedData
 }
