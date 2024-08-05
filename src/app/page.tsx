@@ -1,7 +1,7 @@
 import { Italiana } from 'next/font/google'
 import Image from 'next/image'
 import { ArrowRight, LogIn } from 'lucide-react'
-import HomeNavLink from '../components/home/homeLink'
+import LinkButton from '../components/global/LinkButton'
 
 const italian = Italiana({ subsets: ['latin'], weight: ['400'] })
 
@@ -21,18 +21,24 @@ export default function Home() {
             planeje o futuro e controle o presente.
           </h2>
           <nav className="flex justify-center gap-1 p-2">
-            <HomeNavLink variant="default">
-              <>
-                Acessar
-                <LogIn size={20} />
-              </>
-            </HomeNavLink>
-            <HomeNavLink variant="light">
+            <LinkButton
+              href="/resumo"
+              title="Clique para acessar a aplicação"
+              variant="primary"
+            >
+              Acessar
+              <LogIn size={20} />
+            </LinkButton>
+            <LinkButton
+              href="/resumo"
+              title="Clique para se cadastrar"
+              variant="light"
+            >
               <>
                 Cadastrar
                 <ArrowRight size={20} />
               </>
-            </HomeNavLink>
+            </LinkButton>
           </nav>
         </main>
       </div>

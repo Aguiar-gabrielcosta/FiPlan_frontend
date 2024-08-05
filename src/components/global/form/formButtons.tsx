@@ -1,5 +1,5 @@
 import { Loader2, SendHorizonal, X } from 'lucide-react'
-import Link from 'next/link'
+import LinkButton from '../LinkButton'
 
 interface FormButtonProps {
   pending: boolean
@@ -8,17 +8,18 @@ interface FormButtonProps {
 export default function FormButtons({ pending }: FormButtonProps) {
   return (
     <div className="flex justify-end gap-2">
-      <Link
-        role="button"
-        className="flex items-center gap-2 rounded-lg bg-primaryDR px-2 py-1 text-neutralWhite"
+      <LinkButton
         href={'/resumo/planejamento'}
+        title="Clique para cancelar e retornar aos planejamentos"
+        variant="dark"
       >
         <X size={20} />
         Cancelar
-      </Link>
+      </LinkButton>
       <button
         type="submit"
         className="flex items-center gap-2 rounded-lg bg-primary px-2 py-1 text-neutralWhite"
+        title="Clique para enviar o formulário"
         disabled={pending}
       >
         {pending ? (

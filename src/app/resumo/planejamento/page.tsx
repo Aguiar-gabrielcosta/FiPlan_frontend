@@ -1,3 +1,5 @@
+import PlanOptionsBar from '@/src/components/planejamento/planOptionsBar'
+
 export default function Planejamento() {
-  return <h1>Página /planejamento</h1>
+  return <PlanOptionsBar />
 }

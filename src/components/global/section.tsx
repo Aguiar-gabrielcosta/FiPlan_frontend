@@ -1,12 +1,10 @@
-import { ReactNode } from 'react'
-
 export default function Section({
   title,
   children,
   width,
 }: {
   title: string
-  children: ReactNode
+  children: React.ReactNode
   width: 'full' | 'fit'
 }) {
   return (
