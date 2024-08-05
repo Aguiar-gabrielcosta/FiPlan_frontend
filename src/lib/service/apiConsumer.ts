@@ -1,4 +1,5 @@
 import {
+  CategoriesProgress,
   Category,
   ExpensesPerCategory,
   monthlyBalance,
@@ -65,6 +66,27 @@ export async function fecthPlanProgress(
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar o progresso do plano.' }
+  }
+}
+
+export async function fecthCategoriesProgress(
+  planId: string,
+): Promise<{ data?: CategoriesProgress[]; message?: string }> {
+  try {
+    const res = await fetch(
+      `${apiBaseURL}/category/progress/${userId}/${planId}`,
+    )
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const planProgress = await res.json()
+
+    return { data: planProgress }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar o progresso das categorias.' }
   }
 }
 

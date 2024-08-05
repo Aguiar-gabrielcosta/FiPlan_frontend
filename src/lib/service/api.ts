@@ -1,4 +1,5 @@
 import {
+  fecthCategoriesProgress,
   fecthExpensesPerCategory,
   fecthPlanProgress,
   fetchCategories,
@@ -16,6 +17,7 @@ export const Api = {
   monthlyBalance: fetchMonthlyBalance,
   plans: fetchPlans,
   planProgress: fecthPlanProgress,
+  categoriesProgress: fecthCategoriesProgress,
   expensesPerCategory: fecthExpensesPerCategory,
   categories: fetchCategories,
   addPlan,

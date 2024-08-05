@@ -26,6 +26,14 @@ export type PlanProgress = {
   progress: number
 }
 
+export type CategoriesProgress = {
+  category_id: number
+  category: string
+  category_budget: number
+  total_expenses: number
+  progress: number
+}
+
 export type ExpensesPerCategory = {
   category: string
   expenses: number

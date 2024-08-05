@@ -1,10 +1,10 @@
-import { ExpensesPerCategory } from '@/src/lib/definitions'
+import { CategoriesProgress } from '@/src/lib/definitions'
 import formatValue from '@/src/lib/utils/formatValue'
 
 export default function PlanCategoriesInfo({
   data,
 }: {
-  data: ExpensesPerCategory[]
+  data: CategoriesProgress[]
 }) {
   return (
     <table className="w-full border-collapse">
@@ -32,19 +32,23 @@ export default function PlanCategoriesInfo({
         {data.map((category) => {
           return (
             <tr
-              key={category.category}
+              key={category.category_id}
               className="border-b border-primaryLR text-primaryDR"
             >
               <td className="truncate p-2">{category.category}</td>
               <td className="truncate p-2">
                 {formatValue(category.category_budget)}
               </td>
-              <td className="truncate p-2">{formatValue(category.expenses)}</td>
+              <td className="truncate p-2">
+                {formatValue(category.total_expenses)}
+              </td>
               <td className="truncate p-2">
                 {(category.progress * 100).toFixed(0)}%
               </td>
               <td className="truncate p-2">
-                {formatValue(category.category_budget - category.expenses)}
+                {formatValue(
+                  category.category_budget - category.total_expenses,
+                )}
               </td>
               <td className="truncate p-2"></td>
             </tr>

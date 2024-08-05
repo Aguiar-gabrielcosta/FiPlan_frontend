@@ -5,7 +5,7 @@ import PlanCategoriesInfo from './planCategoriesInfo'
 
 export default async function PlanInfo({ planId }: { planId: string }) {
   const planProgress = await Api.planProgress(planId)
-  const categories = await Api.expensesPerCategory(planId)
+  const categories = await Api.categoriesProgress(planId)
 
   if (!planProgress.data) {
     return (
