@@ -11,8 +11,7 @@ export default function Resumo({
 }: {
   searchParams?: { plan?: string }
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const planId = searchParams?.plan || ''
+  const planId = searchParams?.plan
 
   return (
     <div className="flex flex-col gap-2">
