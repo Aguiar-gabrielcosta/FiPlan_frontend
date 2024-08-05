@@ -1,5 +1,6 @@
 import { CategoriesProgress } from '@/src/lib/definitions'
 import formatValue from '@/src/lib/utils/formatValue'
+import { Edit2, Trash2 } from 'lucide-react'
 
 export default function PlanCategoriesInfo({
   data,
@@ -50,7 +51,22 @@ export default function PlanCategoriesInfo({
                   category.category_budget - category.total_expenses,
                 )}
               </td>
-              <td className="truncate p-2"></td>
+              <td className="flex justify-end gap-2 truncate p-2">
+                <button
+                  type="button"
+                  title="Clique para editar a categoria"
+                  className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD"
+                >
+                  <Edit2 />
+                </button>
+                <button
+                  type="button"
+                  title="Clique para excluir a categoria"
+                  className="bg-trasnsparent rounded-lg border border-primaryD p-1 text-primaryD"
+                >
+                  <Trash2 />
+                </button>
+              </td>
             </tr>
           )
         })}

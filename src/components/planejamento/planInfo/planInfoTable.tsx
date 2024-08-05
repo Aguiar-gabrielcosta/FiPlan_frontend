@@ -1,5 +1,6 @@
 import { PlanProgress } from '@/src/lib/definitions'
 import formatValue from '@/src/lib/utils/formatValue'
+import { Edit2, Trash2 } from 'lucide-react'
 
 export default function PlanInfoTable({ data }: { data: PlanProgress }) {
   return (
@@ -47,8 +48,21 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
               year: '2-digit',
             })}
           </td>
-          <td className="truncate p-2">
-            <button></button>
+          <td className="flex justify-end gap-2 truncate p-2">
+            <button
+              type="button"
+              title="Clique para editar o plano"
+              className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD"
+            >
+              <Edit2 />
+            </button>
+            <button
+              type="button"
+              title="Clique para excluir o plano"
+              className="bg-trasnsparent rounded-lg border border-primaryD p-1 text-primaryD"
+            >
+              <Trash2 />
+            </button>
           </td>
         </tr>
       </tbody>
