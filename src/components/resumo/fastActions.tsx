@@ -8,6 +8,7 @@ export default function FastActions() {
     <Section width="fit" title="Acesso Rápido">
       <div className="flex h-full gap-2">
         <Link
+          title="Clique para adicionar um novo plano"
           className="flex flex-col items-center justify-center gap-1 rounded-lg bg-primaryD p-1 font-medium text-neutralWhite transition-all hover:bg-primary"
           href={'resumo/planejamento/plano'}
         >
@@ -15,6 +16,7 @@ export default function FastActions() {
           <p className="w-[100px] text-center">+ Plano</p>
         </Link>
         <Link
+          title="Clique para adicionar uma nova categoria"
           className="flex flex-col items-center justify-center gap-1 rounded-lg bg-primaryD p-1 font-medium text-neutralWhite transition-all hover:bg-primary"
           href={'resumo/planejamento/categoria'}
         >
@@ -22,6 +24,7 @@ export default function FastActions() {
           <p className="w-[100px] text-center">+ Categoria</p>
         </Link>
         <Link
+          title="Clique para adicionar uma nova transação"
           className="flex flex-col items-center justify-center gap-1 rounded-lg bg-primaryD p-1 font-medium text-neutralWhite transition-all hover:bg-primary"
           href={'resumo/planejamento/transacao'}
         >
