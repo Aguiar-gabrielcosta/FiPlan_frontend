@@ -73,14 +73,14 @@ export default function PlanCategoriesInfo({
                   <Link
                     href={`/resumo/planejamento/${category.category_id}/categoria`}
                     title="Clique para editar a categoria"
-                    className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD"
+                    className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD transition-all hover:bg-primaryLR"
                   >
                     <Edit2 />
                   </Link>
                   <button
                     type="button"
                     title="Clique para excluir a categoria"
-                    className="bg-trasnsparent rounded-lg border border-primaryD p-1 text-primaryD"
+                    className="bg-trasnsparent rounded-lg border border-primaryD p-1 text-primaryD transition-all hover:bg-primaryLR"
                     onClick={() => categoryDeleteAction(category.category_id)}
                   >
                     <Trash2 />

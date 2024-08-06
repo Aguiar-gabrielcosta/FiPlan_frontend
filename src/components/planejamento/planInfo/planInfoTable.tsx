@@ -74,14 +74,14 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
               <Link
                 href={`/resumo/planejamento/${planId}/plano`}
                 title="Clique para editar o plano"
-                className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD"
+                className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD transition-all hover:bg-primaryLR"
               >
                 <Edit2 />
               </Link>
               <button
                 type="button"
                 title="Clique para excluir o plano"
-                className="bg-trasnsparent rounded-lg border border-primaryD p-1 text-primaryD"
+                className="bg-trasnsparent rounded-lg border border-primaryD p-1 text-primaryD transition-all hover:bg-primaryLR"
                 onClick={() => planDeleteAction()}
               >
                 <Trash2 />

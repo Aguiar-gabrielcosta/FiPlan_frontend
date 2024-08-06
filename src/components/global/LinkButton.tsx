@@ -18,9 +18,9 @@ export default function LinkButton({
   ...props
 }: ButtonLink) {
   const buttonTheme = {
-    primary: 'bg-primary text-neutralWhite',
-    dark: 'bg-primaryDR text-neutralWhite',
-    light: 'bg-primaryLR text-primaryDR',
+    primary: 'bg-primary text-neutralWhite hover:opacity-90 transition-all',
+    dark: 'bg-primaryDR text-neutralWhite hover:opacity-90 transition-all',
+    light: 'bg-primaryLR text-primaryDR hover:opacity-90 transition-all',
   }
 
   const buttonFontSize = {
