@@ -40,9 +40,3 @@ export type ExpensesPerCategory = {
   category_budget: number
   progress: number
 }
-
-// Tipos de envio de requisições
-export type PlanUser = {
-  user_id: string
-  plan_id: string
-}

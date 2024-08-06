@@ -134,3 +134,30 @@ export async function deleteCategory(categoryId: number) {
     throw new Error('Database error: Não foi possível deletar a categoria')
   }
 }
+
+export async function updatePlan(
+  planId: string,
+  budgetValue: number,
+  startDate: string,
+  endDate: string,
+) {
+  const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      budget_value: budgetValue,
+      start_date: startDate,
+      end_date: endDate,
+    }),
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível atualizar o plano')
+  }
+}

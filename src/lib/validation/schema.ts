@@ -54,3 +54,5 @@ export const NewPlanSchema = z.object({
     }),
   categories: z.array(NewCategorySchema.omit({ planId: true })),
 })
+
+export const UpdatePlanSchema = NewPlanSchema.omit({ categories: true })

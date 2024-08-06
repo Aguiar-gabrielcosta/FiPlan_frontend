@@ -30,7 +30,7 @@ export async function fetchMonthlyBalance(): Promise<{
   }
 }
 
-export async function fetchPlans(): Promise<{
+export async function fetchUserPlans(): Promise<{
   data?: Plan[]
   message?: string
 }> {
@@ -47,6 +47,26 @@ export async function fetchPlans(): Promise<{
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar os planos.' }
+  }
+}
+
+export async function fetchPlanById(planId: string): Promise<{
+  data?: Plan
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/plan/data/${planId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const plan = await res.json()
+
+    return { data: plan }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar o plano.' }
   }
 }
 
@@ -115,12 +135,32 @@ export async function fecthExpensesPerCategory(
   }
 }
 
-export async function fetchCategories(): Promise<{
+export async function fetchUserCategories(): Promise<{
   data?: Category[]
   message?: string
 }> {
   try {
     const res = await fetch(`${apiBaseURL}/category/${userId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const categories = await res.json()
+
+    return { data: Array.isArray(categories) ? categories : [] }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar as categorias.' }
+  }
+}
+
+export async function fetchCategoriesByPlan(planId: string): Promise<{
+  data?: Omit<Category, 'plan_id'>[]
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/category/plan/${planId}`)
 
     if (!res.ok) {
       throw new Error()

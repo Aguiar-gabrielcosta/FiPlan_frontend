@@ -60,14 +60,14 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
             </td>
             <td className="truncate p-2">
               {new Date(data.start_date).toLocaleDateString('pt-br', {
+                day: '2-digit',
                 month: '2-digit',
-                year: '2-digit',
               })}
             </td>
             <td className="truncate p-2">
               {new Date(data.end_date).toLocaleDateString('pt-br', {
+                day: '2-digit',
                 month: '2-digit',
-                year: '2-digit',
               })}
             </td>
             <td className="flex justify-end gap-2 truncate p-2">

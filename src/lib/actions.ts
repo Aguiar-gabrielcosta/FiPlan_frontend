@@ -6,6 +6,7 @@ import { Api } from './service/api'
 import { validateNewTransaction } from './validation/validateTransaction'
 import { validateCategory } from './validation/validateCategory'
 import { validatePlan } from './validation/validatePlan'
+import { validatePlanUpdate } from './validation/validatePlanUpdate'
 
 export type TransactionActionState = {
   errors?: {
@@ -52,8 +53,7 @@ export async function newTransaction(
   }
 
   // Revalidar o cache da aplicação e redireciona o usuário para a página de planejamento
-  revalidatePath('/resumo')
-  revalidatePath('/resumo/planejamento')
+  revalidatePath('/', 'layout')
   redirect('/resumo/planejamento')
 }
 
@@ -102,9 +102,7 @@ export async function newCategory(
   }
 
   // Revalidar o cache da aplicação e redireciona o usuário para a página de planejamento
-  revalidatePath('/resumo')
-  revalidatePath('/resumo/planejamento')
-  revalidatePath('/resumo/planejamento/transacao')
+  revalidatePath('/', 'layout')
   redirect('/resumo/planejamento')
 }
 
@@ -160,10 +158,7 @@ export async function newPlan(prevState: PlanActionState, formData: FormData) {
   }
 
   // Revalida o cache da aplicação e redireciona o usuário para a página de planjejamento
-  revalidatePath('/resumo')
-  revalidatePath('/resumo/planejamento')
-  revalidatePath('/resumo/planejamento/transacao')
-  revalidatePath('/resumo/planejamento/categoria')
+  revalidatePath('/', 'layout')
   redirect('/resumo/planejamento')
 }
 
@@ -180,9 +175,7 @@ export async function deleteCategory(categoryId: number) {
   }
 
   // Revalida o cache
-  revalidatePath('/resumo')
-  revalidatePath('/resumo/planejamento')
-  revalidatePath('/resumo/planejamento/transacao')
+  revalidatePath('/', 'layout')
 }
 
 // Server function para deletar um plano
@@ -198,9 +191,54 @@ export async function deletePlan(planId: string) {
   }
 
   // Revalida o cache
-  revalidatePath('/resumo')
-  revalidatePath('/resumo/planejamento')
-  revalidatePath('/resumo/planejamento/transacao')
-  revalidatePath('/resumo/planejamento/categoria')
+  revalidatePath('/', 'layout')
   redirect('/resumo/planejamento')
+}
+
+export type UpdatePlanActionState = {
+  errors?: {
+    budgetValue?: string[]
+    startDate?: string[]
+    endDate?: string[]
+  }
+  message?: string | null
+}
+
+// Server action para atualizar um plano
+export async function updatePlan(
+  planId: string,
+  prevState: UpdatePlanActionState,
+  formData: FormData,
+) {
+  // Validação dos campos
+  const validatedFields = validatePlanUpdate(formData)
+
+  // Caso não passar na validação, retorna as mensagens de erro
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Não foi possível atualizar o plano. Revise os dados acima.',
+    }
+  }
+
+  // Passando na validação envia os dados.
+  const { budgetValue, endDate, startDate } = validatedFields.data
+
+  try {
+    const affected = await Api.updatePlan(
+      planId,
+      budgetValue,
+      startDate,
+      endDate,
+    )
+
+    console.log('Plano atualizado: ', affected)
+  } catch {
+    return {
+      message: 'Não foi possível atualizar o plano.',
+    }
+  }
+
+  revalidatePath('/', 'layout')
+  redirect(`/resumo/planejamento?plan=${planId}`)
 }
