@@ -4,7 +4,8 @@ import { deletePlan } from '@/src/lib/actions'
 import { PlanProgress } from '@/src/lib/definitions'
 import formatValue from '@/src/lib/utils/formatValue'
 import { Edit2, Trash2 } from 'lucide-react'
-import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { redirect, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 export default function PlanInfoTable({ data }: { data: PlanProgress }) {
@@ -19,6 +20,10 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
     } else if (deleteError) {
       setDeleteError(undefined)
     }
+  }
+
+  const planUpdateRedirect = () => {
+    redirect(`/resumo/planejamento/${planId}/plano`)
   }
 
   return (
@@ -68,13 +73,13 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
               })}
             </td>
             <td className="flex justify-end gap-2 truncate p-2">
-              <button
-                type="button"
+              <Link
+                href={`/resumo/planejamento/${planId}/plano`}
                 title="Clique para editar o plano"
                 className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD"
               >
                 <Edit2 />
-              </button>
+              </Link>
               <button
                 type="button"
                 title="Clique para excluir o plano"

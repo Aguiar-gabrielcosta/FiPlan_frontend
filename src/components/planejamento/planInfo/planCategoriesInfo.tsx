@@ -4,6 +4,7 @@ import { deleteCategory } from '@/src/lib/actions'
 import { CategoriesProgress } from '@/src/lib/definitions'
 import formatValue from '@/src/lib/utils/formatValue'
 import { Edit2, Trash2 } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
 
 export default function PlanCategoriesInfo({
@@ -69,13 +70,13 @@ export default function PlanCategoriesInfo({
                   )}
                 </td>
                 <td className="flex justify-end gap-2 truncate p-2">
-                  <button
-                    type="button"
+                  <Link
+                    href={`/resumo/planejamento/${category.category_id}/categoria`}
                     title="Clique para editar a categoria"
                     className="rounded-lg border border-primaryD bg-transparent p-1 text-primaryD"
                   >
                     <Edit2 />
-                  </button>
+                  </Link>
                   <button
                     type="button"
                     title="Clique para excluir a categoria"
