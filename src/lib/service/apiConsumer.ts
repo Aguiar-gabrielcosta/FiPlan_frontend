@@ -155,6 +155,26 @@ export async function fetchUserCategories(): Promise<{
   }
 }
 
+export async function fetchCategoryById(categoryId: number): Promise<{
+  data?: Category
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const category = await res.json()
+
+    return { data: category }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar a categoria.' }
+  }
+}
+
 export async function fetchCategoriesByPlan(planId: string): Promise<{
   data?: Omit<Category, 'plan_id'>[]
   message?: string

@@ -3,6 +3,7 @@ import {
   fecthExpensesPerCategory,
   fecthPlanProgress,
   fetchCategoriesByPlan,
+  fetchCategoryById,
   fetchMonthlyBalance,
   fetchPlanById,
   fetchUserCategories,
@@ -15,6 +16,7 @@ import {
   addTransaction,
   deleteCategory,
   deletePlan,
+  updateCategory,
   updatePlan,
 } from './apiMutations'
 
@@ -26,6 +28,7 @@ export const Api = {
   categoriesProgress: fecthCategoriesProgress,
   expensesPerCategory: fecthExpensesPerCategory,
   categories: fetchUserCategories,
+  categoryById: fetchCategoryById,
   categoriesByPlan: fetchCategoriesByPlan,
   addPlan,
   addCategory,
@@ -34,4 +37,5 @@ export const Api = {
   deletePlan,
   deleteCategory,
   updatePlan,
+  updateCategory,
 }

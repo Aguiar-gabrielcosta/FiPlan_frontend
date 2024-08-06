@@ -7,6 +7,7 @@ import { validateNewTransaction } from './validation/validateTransaction'
 import { validateCategory } from './validation/validateCategory'
 import { validatePlan } from './validation/validatePlan'
 import { validatePlanUpdate } from './validation/validatePlanUpdate'
+import { validateCategoryUpdate } from './validation/validateCategoryUpdate'
 
 export type TransactionActionState = {
   errors?: {
@@ -193,6 +194,53 @@ export async function deletePlan(planId: string) {
   // Revalida o cache
   revalidatePath('/', 'layout')
   redirect('/resumo/planejamento')
+}
+
+export type UpdateCategoryActionState = {
+  errors?: {
+    category?: string[]
+    categoryBudget?: string[]
+  }
+  message?: string | null
+}
+
+// Server action para atualizar uma categoria
+export async function updateCategory(
+  planId: string,
+  categoryId: number,
+  prevState: UpdateCategoryActionState,
+  formData: FormData,
+) {
+  // Validação dos campos
+  const validatedFields = validateCategoryUpdate(formData)
+
+  // Caso não passar na validação, retorna as mensagens de erro
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Não foi possível atualizar a categoria. Revise os dados acima.',
+    }
+  }
+
+  // Passando na validação envia os dados.
+  const { category, categoryBudget } = validatedFields.data
+
+  try {
+    const affected = await Api.updateCategory(
+      categoryId,
+      category,
+      categoryBudget,
+    )
+
+    console.log('Categoria atualizada: ', affected)
+  } catch {
+    return {
+      message: 'Não foi possível atualizar a categoria.',
+    }
+  }
+
+  revalidatePath('/', 'layout')
+  redirect(`/resumo/planejamento?plan=${planId}`)
 }
 
 export type UpdatePlanActionState = {

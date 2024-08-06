@@ -135,6 +135,30 @@ export async function deleteCategory(categoryId: number) {
   }
 }
 
+export async function updateCategory(
+  categoryId: number,
+  category: string,
+  categoryBudget: number,
+) {
+  const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      category,
+      category_budget: categoryBudget,
+    }),
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível atualizar a categoria')
+  }
+}
+
 export async function updatePlan(
   planId: string,
   budgetValue: number,

@@ -30,6 +30,8 @@ export const NewCategorySchema = z.object({
     .gt(0, { message: 'Por favor, insira um valor maior que R$ 0.' }),
 })
 
+export const UpdateCategorySchema = NewCategorySchema.omit({ planId: true })
+
 export const NewPlanSchema = z.object({
   budgetValue: z.coerce
     .number()
