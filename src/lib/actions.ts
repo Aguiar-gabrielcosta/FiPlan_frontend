@@ -172,7 +172,7 @@ export async function deleteCategory(categoryId: number) {
   try {
     const affected = await Api.deleteCategory(categoryId)
 
-    console.log('Categorias deletadas: ', affected);
+    console.log('Categorias deletadas: ', affected)
   } catch {
     return {
       message: 'Não foi possível deletar a categoria.',
@@ -190,7 +190,7 @@ export async function deletePlan(planId: string) {
   try {
     const affected = await Api.deletePlan(planId)
 
-    console.log('Planos deletados: ', affected);
+    console.log('Planos deletados: ', affected)
   } catch {
     return {
       message: 'Não foi possível deletar o plano.',
@@ -204,4 +204,3 @@ export async function deletePlan(planId: string) {
   revalidatePath('/resumo/planejamento/categoria')
   redirect('/resumo/planejamento')
 }
-

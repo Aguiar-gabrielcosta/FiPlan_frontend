@@ -5,7 +5,7 @@ import { PlanProgress } from '@/src/lib/definitions'
 import formatValue from '@/src/lib/utils/formatValue'
 import { Edit2, Trash2 } from 'lucide-react'
 import Link from 'next/link'
-import { redirect, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 export default function PlanInfoTable({ data }: { data: PlanProgress }) {
@@ -20,10 +20,6 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
     } else if (deleteError) {
       setDeleteError(undefined)
     }
-  }
-
-  const planUpdateRedirect = () => {
-    redirect(`/resumo/planejamento/${planId}/plano`)
   }
 
   return (
@@ -56,7 +52,9 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
           <tr className="text-primaryDR">
             <td className="truncate p-2">{formatValue(data.budget_value)}</td>
             <td className="truncate p-2">{formatValue(data.total_expenses)}</td>
-            <td className="truncate p-2">{(data.progress * 100).toFixed(0)}%</td>
+            <td className="truncate p-2">
+              {(data.progress * 100).toFixed(0)}%
+            </td>
             <td className="truncate p-2">
               {formatValue(data.budget_value - data.total_expenses)}
             </td>
@@ -93,11 +91,11 @@ export default function PlanInfoTable({ data }: { data: PlanProgress }) {
         </tbody>
       </table>
 
-      {deleteError && 
-        <p className="m-2 text text-center font-medium text-alertRed">
+      {deleteError && (
+        <p className="text m-2 text-center font-medium text-alertRed">
           {deleteError}
         </p>
-      }
+      )}
     </>
   )
 }

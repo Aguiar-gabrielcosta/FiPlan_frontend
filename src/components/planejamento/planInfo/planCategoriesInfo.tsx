@@ -92,11 +92,11 @@ export default function PlanCategoriesInfo({
         </tbody>
       </table>
 
-      {deleteError && 
-        <p className="m-2 text text-center font-medium text-alertRed">
+      {deleteError && (
+        <p className="text m-2 text-center font-medium text-alertRed">
           {deleteError}
         </p>
-      }
+      )}
     </>
   )
 }
