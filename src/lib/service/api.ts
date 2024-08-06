@@ -11,6 +11,8 @@ import {
   addCategoryBatch,
   addPlan,
   addTransaction,
+  deleteCategory,
+  deletePlan,
 } from './apiMutations'
 
 export const Api = {
@@ -24,4 +26,6 @@ export const Api = {
   addCategory,
   addCategoryBatch,
   addTransaction,
+  deletePlan,
+  deleteCategory,
 }

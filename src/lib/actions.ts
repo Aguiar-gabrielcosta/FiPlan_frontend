@@ -118,6 +118,7 @@ export type PlanActionState = {
   message?: string | null
 }
 
+// Server function para criar um novo plano
 export async function newPlan(prevState: PlanActionState, formData: FormData) {
   // Validação
   const validatedFields = validatePlan(formData)
@@ -165,3 +166,42 @@ export async function newPlan(prevState: PlanActionState, formData: FormData) {
   revalidatePath('/resumo/planejamento/categoria')
   redirect('/resumo/planejamento')
 }
+
+// Server function para deletar uma categoria
+export async function deleteCategory(categoryId: number) {
+  try {
+    const affected = await Api.deleteCategory(categoryId)
+
+    console.log('Categorias deletadas: ', affected);
+  } catch {
+    return {
+      message: 'Não foi possível deletar a categoria.',
+    }
+  }
+
+  // Revalida o cache
+  revalidatePath('/resumo')
+  revalidatePath('/resumo/planejamento')
+  revalidatePath('/resumo/planejamento/transacao')
+}
+
+// Server function para deletar um plano
+export async function deletePlan(planId: string) {
+  try {
+    const affected = await Api.deletePlan(planId)
+
+    console.log('Planos deletados: ', affected);
+  } catch {
+    return {
+      message: 'Não foi possível deletar o plano.',
+    }
+  }
+
+  // Revalida o cache
+  revalidatePath('/resumo')
+  revalidatePath('/resumo/planejamento')
+  revalidatePath('/resumo/planejamento/transacao')
+  revalidatePath('/resumo/planejamento/categoria')
+  redirect('/resumo/planejamento')
+}
+

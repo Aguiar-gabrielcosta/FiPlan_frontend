@@ -108,3 +108,29 @@ export async function addCategoryBatch(
     throw new Error('Database error: Não foi possível adicionar a categoria')
   }
 }
+
+export async function deletePlan(planId: string) {
+  const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
+    method: 'DELETE'
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error ('Database error: Não foi possível deletar o plano')
+  }
+}
+
+export async function deleteCategory(categoryId: number) {
+  const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
+    method: 'DELETE'
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error ('Database error: Não foi possível deletar a categoria')
+  }
+} 
