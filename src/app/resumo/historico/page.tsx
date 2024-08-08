@@ -1,3 +1,11 @@
-export default function Historico() {
-  return <h1>Página /historico</h1>
+import TransactionInfo from '@/src/components/historico/transactionInfo'
+
+export default function Historico({
+  searchParams,
+}: {
+  searchParams?: { page?: string }
+}) {
+  const page = searchParams?.page || '1'
+
+  return <TransactionInfo page={page} />
 }

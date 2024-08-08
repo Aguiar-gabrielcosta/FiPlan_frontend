@@ -135,6 +135,19 @@ export async function deleteCategory(categoryId: number) {
   }
 }
 
+export async function deleteTransaction(transactionId: string) {
+  const res = await fetch(`${apiBaseURL}/transaction/data/${transactionId}`, {
+    method: 'DELETE',
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível deletar a transação')
+  }
+}
+
 export async function updateCategory(
   categoryId: number,
   category: string,

@@ -194,3 +194,51 @@ export async function fetchCategoriesByPlan(planId: string): Promise<{
     return { message: 'Não foi possível recuperar as categorias.' }
   }
 }
+
+export async function fetchTransactionNumberOfPages(): Promise<{
+  data?: number
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/transaction/pages/${userId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const pagesInfo = await res.json()
+
+    return { data: pagesInfo.pages }
+  } catch (error) {
+    console.log('Database error: ' + error)
+    return { message: 'Não foi possível recuperar o número de páginas' }
+  }
+}
+
+export async function fetchTransactionPage(page: number): Promise<{
+  data?: {
+    transaction_id: string
+    category: string
+    transaction_value: number
+    transaction_type: 'expense' | 'income'
+    transaction_date: string
+  }[]
+  message?: string
+}> {
+  try {
+    const res = await fetch(
+      `${apiBaseURL}/transaction/history/${userId}/${page}`,
+    )
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const transactions = await res.json()
+
+    return { data: Array.isArray(transactions) ? transactions : [] }
+  } catch (error) {
+    console.log('Database error: ' + error)
+    return { message: 'Não foi possível recuperar o número de páginas' }
+  }
+}

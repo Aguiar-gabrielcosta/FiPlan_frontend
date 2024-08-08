@@ -163,12 +163,28 @@ export async function newPlan(prevState: PlanActionState, formData: FormData) {
   redirect('/resumo/planejamento')
 }
 
+// Server function para deletar uma transação
+export async function deleteTransaction(transactionId: string) {
+  try {
+    const affected = await Api.deleteTransaction(transactionId)
+
+    console.log('Transação deletada: ', affected)
+  } catch {
+    return {
+      message: 'Não foi possível deletar a transação.',
+    }
+  }
+
+  // Revalida o cache
+  revalidatePath('/', 'layout')
+}
+
 // Server function para deletar uma categoria
 export async function deleteCategory(categoryId: number) {
   try {
     const affected = await Api.deleteCategory(categoryId)
 
-    console.log('Categorias deletadas: ', affected)
+    console.log('Categoria deletada: ', affected)
   } catch {
     return {
       message: 'Não foi possível deletar a categoria.',

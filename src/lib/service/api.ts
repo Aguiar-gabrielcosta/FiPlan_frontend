@@ -6,6 +6,8 @@ import {
   fetchCategoryById,
   fetchMonthlyBalance,
   fetchPlanById,
+  fetchTransactionNumberOfPages,
+  fetchTransactionPage,
   fetchUserCategories,
   fetchUserPlans,
 } from './apiConsumer'
@@ -16,6 +18,7 @@ import {
   addTransaction,
   deleteCategory,
   deletePlan,
+  deleteTransaction,
   updateCategory,
   updatePlan,
 } from './apiMutations'
@@ -30,12 +33,15 @@ export const Api = {
   categories: fetchUserCategories,
   categoryById: fetchCategoryById,
   categoriesByPlan: fetchCategoriesByPlan,
+  transactionNumberOfPages: fetchTransactionNumberOfPages,
+  transactionPage: fetchTransactionPage,
   addPlan,
   addCategory,
   addCategoryBatch,
   addTransaction,
   deletePlan,
   deleteCategory,
+  deleteTransaction,
   updatePlan,
   updateCategory,
 }
