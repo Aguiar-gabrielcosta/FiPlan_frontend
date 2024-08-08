@@ -60,7 +60,11 @@ export default function TransactionTable({
                 <td className="truncate p-2">
                   {formatValue(transaction.transaction_value)}
                 </td>
-                <td className="truncate p-2">{transaction.transaction_type}</td>
+                <td className="truncate p-2">
+                  {transaction.transaction_type === 'expense'
+                    ? 'Gasto'
+                    : 'Receita'}
+                </td>
                 <td className="truncate p-2">
                   {formatDate(transaction.transaction_date)}
                 </td>
