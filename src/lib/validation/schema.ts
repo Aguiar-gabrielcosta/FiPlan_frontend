@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import adjustToUTC from '../utils/adjustToUTC'
 
 // Esquema de validação do formulário de nova transação
 export const NewTransactionSchema = z.object({
@@ -28,3 +29,32 @@ export const NewCategorySchema = z.object({
     .number()
     .gt(0, { message: 'Por favor, insira um valor maior que R$ 0.' }),
 })
+
+export const UpdateCategorySchema = NewCategorySchema.omit({ planId: true })
+
+export const NewPlanSchema = z.object({
+  budgetValue: z.coerce
+    .number()
+    .gt(0, 'Por favor, insira um valor maior que R$ 0.'),
+  startDate: z
+    .string()
+    .transform((dateStr) => adjustToUTC(dateStr))
+    .refine((date) => !isNaN(date.getTime()), {
+      message: 'Por favor, insira uma data de início para o plano.',
+    })
+    .transform((date) => {
+      return date.toISOString()
+    }),
+  endDate: z
+    .string()
+    .transform((dateStr) => adjustToUTC(dateStr))
+    .refine((date) => !isNaN(date.getTime()), {
+      message: 'Por favor, insira uma data de início para o plano.',
+    })
+    .transform((date) => {
+      return date.toISOString()
+    }),
+  categories: z.array(NewCategorySchema.omit({ planId: true })),
+})
+
+export const UpdatePlanSchema = NewPlanSchema.omit({ categories: true })

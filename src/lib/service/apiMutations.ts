@@ -76,3 +76,125 @@ export async function addTransaction(
     throw new Error('Database error: Não foi possível adicionar a transação.')
   }
 }
+
+export async function addCategoryBatch(
+  planId: string,
+  categoryArray: {
+    category: string
+    categoryBudget: number
+  }[],
+) {
+  const categories = categoryArray.map((category) => {
+    return {
+      user_id: userId,
+      plan_id: planId,
+      category: category.category,
+      category_budget: category.categoryBudget,
+    }
+  })
+
+  const res = await fetch(`${apiBaseURL}/category/data/batch`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ categories }),
+  })
+
+  if (res.ok) {
+    const ids = await res.json()
+    return ids.map((id: { category_id: number }) => id.category_id)
+  } else {
+    throw new Error('Database error: Não foi possível adicionar a categoria')
+  }
+}
+
+export async function deletePlan(planId: string) {
+  const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
+    method: 'DELETE',
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível deletar o plano')
+  }
+}
+
+export async function deleteCategory(categoryId: number) {
+  const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
+    method: 'DELETE',
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível deletar a categoria')
+  }
+}
+
+export async function deleteTransaction(transactionId: string) {
+  const res = await fetch(`${apiBaseURL}/transaction/data/${transactionId}`, {
+    method: 'DELETE',
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível deletar a transação')
+  }
+}
+
+export async function updateCategory(
+  categoryId: number,
+  category: string,
+  categoryBudget: number,
+) {
+  const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      category,
+      category_budget: categoryBudget,
+    }),
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível atualizar a categoria')
+  }
+}
+
+export async function updatePlan(
+  planId: string,
+  budgetValue: number,
+  startDate: string,
+  endDate: string,
+) {
+  const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      budget_value: budgetValue,
+      start_date: startDate,
+      end_date: endDate,
+    }),
+  })
+
+  if (res.ok) {
+    const { affected } = await res.json()
+    return affected
+  } else {
+    throw new Error('Database error: Não foi possível atualizar o plano')
+  }
+}

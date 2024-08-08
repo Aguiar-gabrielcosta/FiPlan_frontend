@@ -5,7 +5,7 @@ import MenuNav from './menuNav'
 
 export default function Menu() {
   return (
-    <div className="flex w-[260px] flex-col p-2">
+    <div className="flex w-[260px] flex-shrink-0 flex-col p-2">
       <header className="rounded-lg bg-primaryDR p-2 text-neutralWhite">
         <div className="mb-4 flex flex-col items-center gap-2 p-2">
           <Image src={'/avatar.svg'} width={80} height={80} alt={'user.name'} />

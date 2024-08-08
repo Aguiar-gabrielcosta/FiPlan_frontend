@@ -1,16 +1,16 @@
-export default function SelectorBar({
+export default function OptionsBar({
   title,
   children,
 }: {
   title: string
-  children: JSX.Element
+  children: React.ReactNode
 }) {
   return (
     <section
-      className={`col-span-2 flex items-center justify-between gap-4 rounded-lg bg-neutralWhite p-2 drop-shadow-md`}
+      className={`col-span-full flex items-center justify-between rounded-lg bg-neutralWhite p-2 drop-shadow-md`}
     >
       <h3 className="text-xl font-bold text-primaryD">{title}</h3>
-      <div>{children}</div>
+      {children}
     </section>
   )
 }

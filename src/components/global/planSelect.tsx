@@ -8,7 +8,7 @@ type Props = {
   data: Plan[]
 }
 
-export default function PlanSelectorForm({ data }: Props) {
+export default function PlanSelect({ data }: Props) {
   const urlParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()

@@ -28,4 +28,19 @@ test.describe('Resumo e2e testing', async () => {
     // Deve voltar para a home
     await expect(page).toHaveURL('/')
   })
+
+  test('should have 3 sections', async ({ page }) => {
+    // Deve haver a sessão de balanço mensal
+    await expect(
+      page.locator('section', { hasText: 'Balanço Mensal' }),
+    ).toBeVisible()
+    // Deve haver a sessão de Acesso Rápido
+    await expect(
+      page.locator('section', { hasText: 'Acesso Rápido' }),
+    ).toBeVisible()
+    // Deve haver a barra de Período de Análise
+    await expect(
+      page.locator('section', { hasText: 'Período de análise' }),
+    ).toBeVisible()
+  })
 })

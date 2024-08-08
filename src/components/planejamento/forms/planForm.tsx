@@ -1,83 +1,249 @@
-import { SendHorizonal, X } from 'lucide-react'
-import Link from 'next/link'
+'use client'
+
+import { newPlan, PlanActionState } from '@/src/lib/actions'
+import { Form } from '../../global/form'
+import { useFormState, useFormStatus } from 'react-dom'
+import { ChangeEvent, useState } from 'react'
+import { Trash2 } from 'lucide-react'
 
 export default function PlanForm() {
+  const initialState: PlanActionState = { message: null, errors: {} }
+  const [state, formAction] = useFormState(newPlan, initialState)
+  const { pending } = useFormStatus()
+  const [planBudget, setPlanBudget] = useState('')
+  const [newCategories, setNewCategories] = useState<
+    {
+      category: string
+      categoryBudget: string
+    }[]
+  >([])
+
+  const newCategory = () => {
+    const newCategory = { category: '', categoryBudget: '' }
+
+    setNewCategories([newCategory, ...newCategories])
+  }
+
+  const handleChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const data = [...newCategories]
+    const target = event.target.name
+
+    if (target === 'category' || target === 'categoryBudget') {
+      data[index][target] = event.target.value
+
+      setNewCategories(data)
+    }
+  }
+
+  const deleteCategory = (index: number) => {
+    const categories = [...newCategories]
+    categories.splice(index, 1)
+
+    setNewCategories(categories)
+  }
+
+  const budgetBalance = () => {
+    const budget = parseFloat(planBudget)
+    const categories = [...newCategories]
+
+    const categoriesTotalBudget = categories.reduce((total, category) => {
+      return (total += parseFloat(category.categoryBudget))
+    }, 0)
+
+    const otherBudget = budget - categoriesTotalBudget
+
+    if (isNaN(otherBudget)) {
+      return ''
+    }
+
+    return otherBudget.toString()
+  }
+
   return (
-    <form action="" id="transactionForm">
-      <div className="flex w-[452px] flex-col justify-between gap-8 rounded-lg bg-neutralWhite p-4 drop-shadow-md">
-        <div className="flex flex-col gap-4 rounded-lg bg-bgL p-4">
-          <fieldset className="flex flex-col gap-4">
-            <legend className="mb-2 font-medium text-primaryDR">Plano</legend>
-            {/* Formulário para adicionar novo plano */}
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="budgetValue"
-                  className="font-medium text-primaryDR"
-                >
-                  Orçamento
-                </label>
+    <Form.Root action={formAction} id="planForm">
+      <Form.InputArea>
+        {/* Orçamento do plano */}
+        <fieldset className="flex flex-col gap-2">
+          <label htmlFor="budgetValue" className="font-medium text-primaryDR">
+            Valor do orçamento
+          </label>
+          <input
+            type="number"
+            name="budgetValue"
+            id="budgetValue"
+            aria-describedby="budgetValueError"
+            placeholder="Insira o orçamento do plano"
+            value={planBudget}
+            className="rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+            onChange={(e) => setPlanBudget(e.target.value)}
+          />
+          <div id="budgetValueError" aria-live="polite">
+            {state.errors?.budgetValue &&
+              state.errors.budgetValue.map((error) => (
+                <p className="text-sm font-medium text-alertRed" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </fieldset>
+
+        {/* Data de início do plano */}
+        <fieldset className="flex flex-col gap-2">
+          <label htmlFor="startDate" className="font-medium text-primaryDR">
+            Data de ínicio
+          </label>
+          <input
+            type="date"
+            name="startDate"
+            id="startDate"
+            aria-describedby="startDateError"
+            className="rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+          />
+          <div id="startDateError" aria-live="polite">
+            {state.errors?.startDate &&
+              state.errors.startDate.map((error) => (
+                <p className="text-sm font-medium text-alertRed" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </fieldset>
+
+        {/* Data do fim do plano */}
+        <fieldset className="flex flex-col gap-2">
+          <label htmlFor="endDate" className="font-medium text-primaryDR">
+            Data do fim
+          </label>
+          <input
+            type="date"
+            name="endDate"
+            id="endDate"
+            aria-describedby="endDateError"
+            className="rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+          />
+          <div id="endDateError" aria-live="polite">
+            {state.errors?.endDate &&
+              state.errors.endDate.map((error) => (
+                <p className="text-sm font-medium text-alertRed" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </fieldset>
+      </Form.InputArea>
+
+      {/* Categorias iniciais do plano */}
+      <Form.InputArea>
+        <div className="flex items-center justify-between">
+          <h3 className="font-medium text-primaryDR">Categorias</h3>
+          <button
+            type="button"
+            className="flex items-center gap-2 rounded-lg bg-primary px-2 py-1 text-sm text-neutralWhite"
+            onClick={() => {
+              newCategory()
+            }}
+          >
+            + Adicionar
+          </button>
+        </div>
+
+        {newCategories.map((category, index) => {
+          return (
+            <div key={index} className="flex gap-1">
+              {/* Nome da nova categoria */}
+              <fieldset className="w-2/3">
+                <input
+                  type="text"
+                  name="category"
+                  aria-describedby="categoriesError"
+                  placeholder="Nome da categoria"
+                  className="w-full rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+                  value={category.category}
+                  onChange={(e) => handleChange(index, e)}
+                />
+              </fieldset>
+
+              {/* Orçamento da nova categoria */}
+              <fieldset className="w-1/3">
                 <input
                   type="number"
-                  name="budgetValue"
-                  id="budgetValue"
-                  placeholder="Insira o orçamento do plano"
-                  className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+                  name="categoryBudget"
+                  aria-describedby="categoriesError"
+                  placeholder="Orçamento"
+                  className="w-full rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+                  value={category.categoryBudget}
+                  onChange={(e) => handleChange(index, e)}
                   min={0}
                   step={0.01}
                 />
-              </div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="startDate"
-                  className="font-medium text-primaryDR"
-                >
-                  Data de início
-                </label>
-                <input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  placeholder="Insira a data de início"
-                  className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="endDate" className="font-medium text-primaryDR">
-                  Data do fim
-                </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  placeholder="Insira a data do fim"
-                  className="w-64 rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
-                />
-              </div>
+              </fieldset>
+
+              <button
+                type="button"
+                className="flex items-center self-end rounded-lg bg-primary p-1 text-neutralWhite"
+                onClick={() => deleteCategory(index)}
+              >
+                <Trash2 size={22} />
+              </button>
             </div>
+          )
+        })}
+
+        <div className="flex gap-1">
+          {/* Nome da nova categoria padrão */}
+          <fieldset className="w-2/3">
+            <input
+              type="text"
+              name="category"
+              aria-describedby="categoriesError"
+              placeholder="Nome da categoria"
+              className="w-full rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+              defaultValue="Outros"
+            />
+          </fieldset>
+
+          {/* Orçamento restante */}
+          <fieldset className="w-1/3">
+            <input
+              type="number"
+              name="categoryBudget"
+              aria-describedby="categoriesError"
+              placeholder="Resto"
+              className="w-full cursor-not-allowed rounded-lg border border-primaryDR px-2 py-1 text-sm placeholder:text-primaryD"
+              readOnly={true}
+              value={budgetBalance()}
+              min={0}
+              step={0.01}
+            />
           </fieldset>
         </div>
 
-        {/* Buttons */}
-        <div className="flex justify-end gap-2">
-          <Link
-            role="button"
-            className="flex items-center gap-2 rounded-lg bg-primaryDR px-2 py-1 text-neutralWhite"
-            href={'/resumo/planejamento'}
+        {state.errors?.categories && (
+          <p
+            className="text-sm font-medium text-alertRed"
+            id="categoriesError"
+            aria-live="polite"
           >
-            <X size={20} />
-            Cancelar
-          </Link>
-          <button
-            type="submit"
-            className="flex items-center gap-2 rounded-lg bg-primary px-2 py-1 text-neutralWhite"
-            disabled={true}
-          >
-            <SendHorizonal size={20} />
-            Enviar
-          </button>
-        </div>
-      </div>
-    </form>
+            Por favor, todas as categorias devem ser nomeadas e possuir
+            orçamento maior que R$ 0.
+          </p>
+        )}
+      </Form.InputArea>
+
+      {/* Mensagem de falha do formulário */}
+      {state.message && (
+        <p
+          className="text-center text-sm font-medium text-alertRed"
+          key={state.message}
+        >
+          {state.message}
+        </p>
+      )}
+
+      <Form.Buttons pending={pending} />
+    </Form.Root>
   )
 }

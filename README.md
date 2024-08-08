@@ -1,5 +1,5 @@
 
-# FiPlan - Front-End - v0.1.0
+# FiPlan - Front-End - v0.2.0
 
 ## Feito com Next.js
 

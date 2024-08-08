@@ -1,4 +1,5 @@
 import {
+  CategoriesProgress,
   Category,
   ExpensesPerCategory,
   monthlyBalance,
@@ -29,7 +30,7 @@ export async function fetchMonthlyBalance(): Promise<{
   }
 }
 
-export async function fetchPlans(): Promise<{
+export async function fetchUserPlans(): Promise<{
   data?: Plan[]
   message?: string
 }> {
@@ -49,6 +50,26 @@ export async function fetchPlans(): Promise<{
   }
 }
 
+export async function fetchPlanById(planId: string): Promise<{
+  data?: Plan
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/plan/data/${planId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const plan = await res.json()
+
+    return { data: plan }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar o plano.' }
+  }
+}
+
 export async function fecthPlanProgress(
   planId: string,
 ): Promise<{ data?: PlanProgress; message?: string }> {
@@ -65,6 +86,27 @@ export async function fecthPlanProgress(
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar o progresso do plano.' }
+  }
+}
+
+export async function fecthCategoriesProgress(
+  planId: string,
+): Promise<{ data?: CategoriesProgress[]; message?: string }> {
+  try {
+    const res = await fetch(
+      `${apiBaseURL}/category/progress/${userId}/${planId}`,
+    )
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const planProgress = await res.json()
+
+    return { data: planProgress }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar o progresso das categorias.' }
   }
 }
 
@@ -93,7 +135,7 @@ export async function fecthExpensesPerCategory(
   }
 }
 
-export async function fetchCategories(): Promise<{
+export async function fetchUserCategories(): Promise<{
   data?: Category[]
   message?: string
 }> {
@@ -110,5 +152,93 @@ export async function fetchCategories(): Promise<{
   } catch (error) {
     console.log('Databse error: ' + error)
     return { message: 'Não foi possível recuperar as categorias.' }
+  }
+}
+
+export async function fetchCategoryById(categoryId: number): Promise<{
+  data?: Category
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const category = await res.json()
+
+    return { data: category }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar a categoria.' }
+  }
+}
+
+export async function fetchCategoriesByPlan(planId: string): Promise<{
+  data?: Omit<Category, 'plan_id'>[]
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/category/plan/${planId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const categories = await res.json()
+
+    return { data: Array.isArray(categories) ? categories : [] }
+  } catch (error) {
+    console.log('Databse error: ' + error)
+    return { message: 'Não foi possível recuperar as categorias.' }
+  }
+}
+
+export async function fetchTransactionNumberOfPages(): Promise<{
+  data?: number
+  message?: string
+}> {
+  try {
+    const res = await fetch(`${apiBaseURL}/transaction/pages/${userId}`)
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const pagesInfo = await res.json()
+
+    return { data: pagesInfo.pages }
+  } catch (error) {
+    console.log('Database error: ' + error)
+    return { message: 'Não foi possível recuperar o número de páginas' }
+  }
+}
+
+export async function fetchTransactionPage(page: number): Promise<{
+  data?: {
+    transaction_id: string
+    category: string
+    transaction_value: number
+    transaction_type: 'expense' | 'income'
+    transaction_date: string
+  }[]
+  message?: string
+}> {
+  try {
+    const res = await fetch(
+      `${apiBaseURL}/transaction/history/${userId}/${page}`,
+    )
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const transactions = await res.json()
+
+    return { data: Array.isArray(transactions) ? transactions : [] }
+  } catch (error) {
+    console.log('Database error: ' + error)
+    return { message: 'Não foi possível recuperar o número de páginas' }
   }
 }
