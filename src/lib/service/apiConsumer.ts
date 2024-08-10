@@ -6,16 +6,24 @@ import {
   Plan,
   PlanProgress,
 } from '../definitions'
+import { getSessionData } from '../utils/sessionUtils'
 
 const apiBaseURL = process.env.API_URL
-const userId = process.env.TEST_USER_FRESH
 
 export async function fetchMonthlyBalance(): Promise<{
   data?: monthlyBalance
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/transaction/balance/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(
+      `${apiBaseURL}/transaction/balance/${session?.userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
+    )
 
     if (!res.ok) {
       throw new Error()
@@ -35,7 +43,12 @@ export async function fetchUserPlans(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/plan/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/plan/${session?.userId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -55,7 +68,12 @@ export async function fetchPlanById(planId: string): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/plan/data/${planId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -74,7 +92,15 @@ export async function fecthPlanProgress(
   planId: string,
 ): Promise<{ data?: PlanProgress; message?: string }> {
   try {
-    const res = await fetch(`${apiBaseURL}/plan/progress/${userId}/${planId}`)
+    const session = await getSessionData()
+    const res = await fetch(
+      `${apiBaseURL}/plan/progress/${session?.userId}/${planId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
+    )
 
     if (!res.ok) {
       throw new Error()
@@ -93,8 +119,14 @@ export async function fecthCategoriesProgress(
   planId: string,
 ): Promise<{ data?: CategoriesProgress[]; message?: string }> {
   try {
+    const session = await getSessionData()
     const res = await fetch(
-      `${apiBaseURL}/category/progress/${userId}/${planId}`,
+      `${apiBaseURL}/category/progress/${session?.userId}/${planId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
     )
 
     if (!res.ok) {
@@ -114,8 +146,14 @@ export async function fecthExpensesPerCategory(
   planId: string,
 ): Promise<{ data?: ExpensesPerCategory[]; message?: string }> {
   try {
+    const session = await getSessionData()
     const res = await fetch(
-      `${apiBaseURL}/transaction/expenses/category/${userId}/${planId}`,
+      `${apiBaseURL}/transaction/expenses/category/${session?.userId}/${planId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
     )
 
     if (!res.ok) {
@@ -140,7 +178,12 @@ export async function fetchUserCategories(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/category/${session?.userId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -160,7 +203,12 @@ export async function fetchCategoryById(categoryId: number): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -180,7 +228,12 @@ export async function fetchCategoriesByPlan(planId: string): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/plan/${planId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/category/plan/${planId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -200,7 +253,15 @@ export async function fetchTransactionNumberOfPages(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/transaction/pages/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(
+      `${apiBaseURL}/transaction/pages/${session?.userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
+    )
 
     if (!res.ok) {
       throw new Error()
@@ -226,8 +287,14 @@ export async function fetchTransactionPage(page: number): Promise<{
   message?: string
 }> {
   try {
+    const session = await getSessionData()
     const res = await fetch(
-      `${apiBaseURL}/transaction/history/${userId}/${page}`,
+      `${apiBaseURL}/transaction/history/${session?.userId}/${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
     )
 
     if (!res.ok) {

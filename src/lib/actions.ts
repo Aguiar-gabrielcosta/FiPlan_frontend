@@ -8,6 +8,9 @@ import { validateCategory } from './validation/validateCategory'
 import { validatePlan } from './validation/validatePlan'
 import { validatePlanUpdate } from './validation/validatePlanUpdate'
 import { validateCategoryUpdate } from './validation/validateCategoryUpdate'
+import { validateLogin } from './validation/validateLogin'
+import { encryptSession } from './utils/sessionUtils'
+import { cookies } from 'next/headers'
 
 export type TransactionActionState = {
   errors?: {
@@ -305,4 +308,48 @@ export async function updatePlan(
 
   revalidatePath('/', 'layout')
   redirect(`/resumo/planejamento?plan=${planId}`)
+}
+
+export type LoginActionState = {
+  errors?: {
+    username?: string[]
+    password?: string[]
+  }
+  message?: string | null
+}
+
+// Server action para Login
+export async function login(prevState: LoginActionState, formData: FormData) {
+  // Validação dos campos
+  const validatedFields = validateLogin(formData)
+
+  // Caso não passar a validação, devolver o erro dos campos
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Não foi possível realizar o login. Revise as credenciais.',
+    }
+  }
+
+  // Caso passar na validação, realizar a autenticação
+  const { username, password } = validatedFields.data
+
+  try {
+    // Tenta realizar a autenticação
+    const response = await Api.signIn(username, password)
+
+    // Resposta da autenticação
+    const { access_token: jwt, user_id: userId } = response
+
+    // Criação da sessão do usuário e armazenamento em cookies
+    const expires = new Date(Date.now() + 8 * 1000 * 60 * 60) // 8 horas
+    const session = await encryptSession({ jwt, userId })
+    cookies().set('session', session, { expires, httpOnly: true })
+  } catch (error) {
+    return {
+      message: 'Não foi possível autenticar o usuário.',
+    }
+  }
+
+  redirect('/resumo')
 }

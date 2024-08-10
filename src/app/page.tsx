@@ -1,6 +1,6 @@
 import { Italiana } from 'next/font/google'
 import Image from 'next/image'
-import { ArrowRight, LogIn } from 'lucide-react'
+import { LogIn } from 'lucide-react'
 import LinkButton from '../components/global/LinkButton'
 
 const italian = Italiana({ subsets: ['latin'], weight: ['400'] })
@@ -22,15 +22,16 @@ export default function Home() {
           </h2>
           <nav className="flex justify-center gap-1 p-2">
             <LinkButton
-              href="/resumo"
+              href="/login"
               title="Clique para acessar a aplicação"
               variant="primary"
             >
               Acessar
               <LogIn size={20} />
             </LinkButton>
-            <LinkButton
-              href="/resumo"
+            {/* Ainda é preciso iplementar cadastro */}
+            {/* <LinkButton
+              href="/cadastrar"
               title="Clique para se cadastrar"
               variant="light"
             >
@@ -38,7 +39,7 @@ export default function Home() {
                 Cadastrar
                 <ArrowRight size={20} />
               </>
-            </LinkButton>
+            </LinkButton> */}
           </nav>
         </main>
       </div>
