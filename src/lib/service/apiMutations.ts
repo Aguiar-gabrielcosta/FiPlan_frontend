@@ -239,3 +239,27 @@ export async function signIn(username: string, password: string) {
     throw new Error('Database error: Não foi possível realizar a autenticação')
   }
 }
+
+export async function signUp(username: string, password: string) {
+  const res = await fetch(`${apiBaseURL}/user/data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+    cache: 'no-cache',
+  })
+
+  if (res.status === 403) {
+    return { message: 'Este usuário já existe.' }
+  }
+
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Database error: Não foi possível realizar o cadastro.')
+  }
+}

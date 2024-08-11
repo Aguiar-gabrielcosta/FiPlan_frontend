@@ -45,7 +45,7 @@ export async function checkSession(req: NextRequest) {
       return NextResponse.redirect(redirectUrl)
     }
 
-    // No caso de estar na home ou na página de login, apenas mantém
+    // No caso de estar na home ou na página de login ou cadastro, apenas mantém
     return NextResponse.next()
   }
 

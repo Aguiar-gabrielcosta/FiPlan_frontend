@@ -59,7 +59,7 @@ export const NewPlanSchema = z.object({
 
 export const UpdatePlanSchema = NewPlanSchema.omit({ categories: true })
 
-export const LoginCredentialsSchema = z.object({
+export const CredentialsSchema = z.object({
   username: z
     .string()
     .min(6, {

@@ -8,7 +8,7 @@ import { validateCategory } from './validation/validateCategory'
 import { validatePlan } from './validation/validatePlan'
 import { validatePlanUpdate } from './validation/validatePlanUpdate'
 import { validateCategoryUpdate } from './validation/validateCategoryUpdate'
-import { validateLogin } from './validation/validateLogin'
+import { validateCredentials } from './validation/validateCredentials'
 import { encryptSession, endSession } from './utils/sessionUtils'
 import { cookies } from 'next/headers'
 
@@ -321,7 +321,7 @@ export type LoginActionState = {
 // Server action para Login
 export async function login(prevState: LoginActionState, formData: FormData) {
   // Validação dos campos
-  const validatedFields = validateLogin(formData)
+  const validatedFields = validateCredentials(formData)
 
   // Caso não passar a validação, devolver o erro dos campos
   if (!validatedFields.success) {
@@ -352,6 +352,50 @@ export async function login(prevState: LoginActionState, formData: FormData) {
   }
 
   redirect('/resumo')
+}
+
+export type SignUpActionState = {
+  errors?: {
+    username?: string[]
+    password?: string[]
+  }
+  message?: string | null
+}
+
+export async function signUp(prevState: SignUpActionState, formData: FormData) {
+  // Validação dos campos
+  const validatedFields = validateCredentials(formData)
+
+  // Caso não passar a validação, devolver o erro dos campos
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Não foi possível realizar o cadastro. Revise as credenciais.',
+    }
+  }
+
+  // Caso passar na validação, tenta realizar o cadastro
+  const { username, password } = validatedFields.data
+
+  try {
+    // Tenta realizar o cadastro
+    const response = await Api.signUp(username, password)
+
+    // Verifica se houve a excessão 403 - (Usuário já existe)
+    if (response.message) {
+      return { message: String(response.message) }
+    }
+
+    const { user_id: userId } = response
+
+    console.log('Usuário criado: ', userId)
+  } catch (error) {
+    return {
+      message: 'Não foi possível autenticar o usuário.',
+    }
+  }
+
+  redirect('/')
 }
 
 // Server action para logout
