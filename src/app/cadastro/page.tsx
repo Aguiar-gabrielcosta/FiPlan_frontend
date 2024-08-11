@@ -1,4 +1,4 @@
-import SignUpForm from "@/src/components/cadastro/signUpForm";
+import SignUpForm from '@/src/components/cadastro/signUpForm'
 
 export default function Cadastro() {
   return (
