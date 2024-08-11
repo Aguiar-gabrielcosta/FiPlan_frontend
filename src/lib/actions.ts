@@ -9,7 +9,7 @@ import { validatePlan } from './validation/validatePlan'
 import { validatePlanUpdate } from './validation/validatePlanUpdate'
 import { validateCategoryUpdate } from './validation/validateCategoryUpdate'
 import { validateLogin } from './validation/validateLogin'
-import { encryptSession } from './utils/sessionUtils'
+import { encryptSession, endSession } from './utils/sessionUtils'
 import { cookies } from 'next/headers'
 
 export type TransactionActionState = {
@@ -352,4 +352,12 @@ export async function login(prevState: LoginActionState, formData: FormData) {
   }
 
   redirect('/resumo')
+}
+
+// Server action para logout
+export async function logout() {
+  // Retira os cookies de sessão
+  endSession()
+
+  redirect('/')
 }

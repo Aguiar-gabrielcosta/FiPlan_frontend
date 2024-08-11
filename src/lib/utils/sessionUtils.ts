@@ -33,30 +33,32 @@ export async function getSessionData() {
 export async function checkSession(req: NextRequest) {
   const session = req.cookies.get('session')?.value
   const onApp = req.nextUrl.pathname.startsWith('/resumo')
+  const onHome = req.nextUrl.pathname === '/'
+  const redirectUrl = req.nextUrl.clone()
 
-  // Se não houver sessão, redireciona ao login
+  // Se não houver sessão
   if (!session) {
-    const redirectUrl = req.nextUrl.clone()
     redirectUrl.pathname = '/login'
-    return onApp ? NextResponse.redirect(redirectUrl) : NextResponse.next()
+
+    // No caso de estar tentando acessar o App, redireciona para o login
+    if (onApp) {
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    // No caso de estar na home ou na página de login, apenas mantém
+    return NextResponse.next()
   }
 
-  const sessionData = await decryptSession(session) // Recupera os dados da sessão
-  const expires = new Date(Date.now() + 8 * 1000 * 60 * 60) // Revona a druação de 8h da sessão
+  // Caso acessar a home já logado, redirecionar ao app
+  if (onHome) {
+    redirectUrl.pathname = '/resumo'
+    return NextResponse.redirect(redirectUrl)
+  }
 
-  // Ao carregar a resposta do servidor renova o cookie
-  const res = NextResponse.next()
-  res.cookies.set({
-    name: 'session',
-    value: await encryptSession(sessionData),
-    httpOnly: true,
-    expires,
-  })
-
-  return res
+  return NextResponse.next()
 }
 
-export async function endSession() {
+export function endSession() {
   // Finaliza a sessão
-  cookies().set('session', '', { expires: new Date(0) })
+  cookies().delete('session')
 }

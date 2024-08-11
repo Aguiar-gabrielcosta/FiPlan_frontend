@@ -33,7 +33,7 @@ export async function fetchMonthlyBalance(): Promise<{
 
     return { data: monthlyBalance }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar o balanço mensal.')
     return { message: 'Não foi possível recuperar o balanço mensal.' }
   }
 }
@@ -58,7 +58,7 @@ export async function fetchUserPlans(): Promise<{
 
     return { data: Array.isArray(plans) ? plans : [] }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar os planos.')
     return { message: 'Não foi possível recuperar os planos.' }
   }
 }
@@ -83,7 +83,7 @@ export async function fetchPlanById(planId: string): Promise<{
 
     return { data: plan }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar o plano.')
     return { message: 'Não foi possível recuperar o plano.' }
   }
 }
@@ -110,7 +110,9 @@ export async function fecthPlanProgress(
 
     return { data: planProgress }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log(
+      'Databse error: Não foi possível recuperar o progresso do plano.',
+    )
     return { message: 'Não foi possível recuperar o progresso do plano.' }
   }
 }
@@ -137,7 +139,9 @@ export async function fecthCategoriesProgress(
 
     return { data: planProgress }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log(
+      'Databse error: Não foi possível recuperar o progresso das categorias.',
+    )
     return { message: 'Não foi possível recuperar o progresso das categorias.' }
   }
 }
@@ -166,7 +170,9 @@ export async function fecthExpensesPerCategory(
       data: Array.isArray(expensesPerCategory) ? expensesPerCategory : [],
     }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log(
+      'Databse error: Não foi possível recuperar a relação de categoria e gastos.',
+    )
     return {
       message: 'Não foi possível recuperar a relação de categoria e gastos.',
     }
@@ -193,7 +199,7 @@ export async function fetchUserCategories(): Promise<{
 
     return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar as categorias.')
     return { message: 'Não foi possível recuperar as categorias.' }
   }
 }
@@ -218,7 +224,7 @@ export async function fetchCategoryById(categoryId: number): Promise<{
 
     return { data: category }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar a categoria.')
     return { message: 'Não foi possível recuperar a categoria.' }
   }
 }
@@ -243,7 +249,7 @@ export async function fetchCategoriesByPlan(planId: string): Promise<{
 
     return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar as categorias.')
     return { message: 'Não foi possível recuperar as categorias.' }
   }
 }
@@ -271,8 +277,10 @@ export async function fetchTransactionNumberOfPages(): Promise<{
 
     return { data: pagesInfo.pages }
   } catch (error) {
-    console.log('Database error: ' + error)
-    return { message: 'Não foi possível recuperar o número de páginas' }
+    console.log(
+      'Database error: Não foi possível recuperar o número de páginas',
+    )
+    return { message: 'Não foi possível recuperar o número de páginas.' }
   }
 }
 
@@ -305,7 +313,9 @@ export async function fetchTransactionPage(page: number): Promise<{
 
     return { data: Array.isArray(transactions) ? transactions : [] }
   } catch (error) {
-    console.log('Database error: ' + error)
-    return { message: 'Não foi possível recuperar o número de páginas' }
+    console.log(
+      'Database error: Não foi possível recuperar o número de páginas',
+    )
+    return { message: 'Não foi possível recuperar o número de páginas.' }
   }
 }

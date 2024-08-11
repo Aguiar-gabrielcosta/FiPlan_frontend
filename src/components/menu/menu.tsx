@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
-import { LogOut } from 'lucide-react'
 import MenuNav from './menuNav'
 
 export default function Menu() {
@@ -17,18 +15,7 @@ export default function Menu() {
         </div>
       </header>
       <nav className="flex h-full flex-col justify-between">
-        <div>
-          <MenuNav />
-        </div>
-        <Link
-          href={'/'}
-          className="flex justify-center rounded-lg bg-primaryDR py-4 text-neutralWhite transition-all hover:bg-opacity-80"
-        >
-          <div className="flex gap-1">
-            Sair
-            <LogOut />
-          </div>
-        </Link>
+        <MenuNav />
       </nav>
     </div>
   )
