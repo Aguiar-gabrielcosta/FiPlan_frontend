@@ -1,6 +1,6 @@
 {
   "name": "fiplan-fe",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
+    "jose": "^5.6.3",
     "lucide-react": "^0.408.0",
     "next": "14.2.5",
     "react": "^18",

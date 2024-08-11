@@ -3,16 +3,13 @@ import LinkButton from '../LinkButton'
 
 interface FormButtonProps {
   pending: boolean
+  cancelHref: string
 }
 
-export default function FormButtons({ pending }: FormButtonProps) {
+export default function FormButtons({ pending, cancelHref }: FormButtonProps) {
   return (
     <div className="flex justify-end gap-2">
-      <LinkButton
-        href={'/resumo/planejamento'}
-        title="Clique para cancelar e retornar aos planejamentos"
-        variant="dark"
-      >
+      <LinkButton href={cancelHref} title="Clique para cancelar" variant="dark">
         <X size={20} />
         Cancelar
       </LinkButton>

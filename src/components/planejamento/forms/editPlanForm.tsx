@@ -120,7 +120,7 @@ export default function EditPlanForm({ plan }: { plan: Plan }) {
         </p>
       )}
 
-      <Form.Buttons pending={pending} />
+      <Form.Buttons cancelHref="/resumo/planejamento" pending={pending} />
     </Form.Root>
   )
 }

@@ -19,6 +19,8 @@ import {
   deleteCategory,
   deletePlan,
   deleteTransaction,
+  signIn,
+  signUp,
   updateCategory,
   updatePlan,
 } from './apiMutations'
@@ -44,4 +46,6 @@ export const Api = {
   deleteTransaction,
   updatePlan,
   updateCategory,
+  signIn,
+  signUp,
 }

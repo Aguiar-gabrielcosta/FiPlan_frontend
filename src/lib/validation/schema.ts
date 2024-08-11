@@ -58,3 +58,17 @@ export const NewPlanSchema = z.object({
 })
 
 export const UpdatePlanSchema = NewPlanSchema.omit({ categories: true })
+
+export const CredentialsSchema = z.object({
+  username: z
+    .string()
+    .min(6, {
+      message: 'O nome de usuário deve conter no mínimo 6 caracteres.',
+    })
+    .max(255, {
+      message: 'O nome de usuário é muito longo.',
+    }),
+  password: z
+    .string()
+    .min(6, { message: 'A senha deve conter no mínimo 6 caracteres.' }),
+})

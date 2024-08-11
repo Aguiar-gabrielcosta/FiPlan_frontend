@@ -22,7 +22,7 @@ export default function Home() {
           </h2>
           <nav className="flex justify-center gap-1 p-2">
             <LinkButton
-              href="/resumo"
+              href="/login"
               title="Clique para acessar a aplicação"
               variant="primary"
             >
@@ -30,7 +30,7 @@ export default function Home() {
               <LogIn size={20} />
             </LinkButton>
             <LinkButton
-              href="/resumo"
+              href="/cadastro"
               title="Clique para se cadastrar"
               variant="light"
             >

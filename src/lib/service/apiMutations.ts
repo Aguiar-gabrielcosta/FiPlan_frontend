@@ -1,18 +1,21 @@
+import { getSessionData } from '../utils/sessionUtils'
+
 const apiBaseURL = process.env.API_URL
-const userId = process.env.TEST_USER_FRESH
 
 export async function addPlan(
   budgetValue: number,
   startDate: string,
   endDate: string,
 ): Promise<{ plan_id: string }> {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/plan/data`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.jwt}`,
     },
     body: JSON.stringify({
-      user_id: userId,
+      user_id: session?.userId,
       budget_value: budgetValue,
       start_date: startDate,
       end_date: endDate,
@@ -31,13 +34,15 @@ export async function addCategory(
   category: string,
   categoryBudget: number,
 ): Promise<{ category_id: number }> {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/category/data`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.jwt}`,
     },
     body: JSON.stringify({
-      user_id: userId,
+      user_id: session?.userId,
       plan_id: planId,
       category,
       category_budget: categoryBudget,
@@ -56,13 +61,15 @@ export async function addTransaction(
   transactionType: 'income' | 'expense',
   transactionValue: number,
 ): Promise<{ transaction_id: number }> {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/transaction/data`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.jwt}`,
     },
     body: JSON.stringify({
-      user_id: userId,
+      user_id: session?.userId,
       category_id: categoryId,
       transaction_type: transactionType,
       transaction_value: transactionValue,
@@ -84,9 +91,10 @@ export async function addCategoryBatch(
     categoryBudget: number
   }[],
 ) {
+  const session = await getSessionData()
   const categories = categoryArray.map((category) => {
     return {
-      user_id: userId,
+      user_id: session?.userId,
       plan_id: planId,
       category: category.category,
       category_budget: category.categoryBudget,
@@ -97,6 +105,7 @@ export async function addCategoryBatch(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.jwt}`,
     },
     body: JSON.stringify({ categories }),
   })
@@ -110,8 +119,12 @@ export async function addCategoryBatch(
 }
 
 export async function deletePlan(planId: string) {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
     method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${session?.jwt}`,
+    },
   })
 
   if (res.ok) {
@@ -123,8 +136,10 @@ export async function deletePlan(planId: string) {
 }
 
 export async function deleteCategory(categoryId: number) {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
     method: 'DELETE',
+    headers: { Authorization: `Bearer ${session?.jwt}` },
   })
 
   if (res.ok) {
@@ -136,8 +151,10 @@ export async function deleteCategory(categoryId: number) {
 }
 
 export async function deleteTransaction(transactionId: string) {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/transaction/data/${transactionId}`, {
     method: 'DELETE',
+    headers: { Authorization: `Bearer ${session?.jwt}` },
   })
 
   if (res.ok) {
@@ -153,10 +170,12 @@ export async function updateCategory(
   category: string,
   categoryBudget: number,
 ) {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.jwt}`,
     },
     body: JSON.stringify({
       category,
@@ -178,13 +197,15 @@ export async function updatePlan(
   startDate: string,
   endDate: string,
 ) {
+  const session = await getSessionData()
   const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${session?.jwt}`,
     },
     body: JSON.stringify({
-      user_id: userId,
+      user_id: session?.userId,
       budget_value: budgetValue,
       start_date: startDate,
       end_date: endDate,
@@ -196,5 +217,49 @@ export async function updatePlan(
     return affected
   } else {
     throw new Error('Database error: Não foi possível atualizar o plano')
+  }
+}
+
+export async function signIn(username: string, password: string) {
+  const res = await fetch(`${apiBaseURL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+    cache: 'no-cache',
+  })
+
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Database error: Não foi possível realizar a autenticação')
+  }
+}
+
+export async function signUp(username: string, password: string) {
+  const res = await fetch(`${apiBaseURL}/user/data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+    cache: 'no-cache',
+  })
+
+  if (res.status === 403) {
+    return { message: 'Este usuário já existe.' }
+  }
+
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Database error: Não foi possível realizar o cadastro.')
   }
 }

@@ -6,16 +6,24 @@ import {
   Plan,
   PlanProgress,
 } from '../definitions'
+import { getSessionData } from '../utils/sessionUtils'
 
 const apiBaseURL = process.env.API_URL
-const userId = process.env.TEST_USER_FRESH
 
 export async function fetchMonthlyBalance(): Promise<{
   data?: monthlyBalance
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/transaction/balance/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(
+      `${apiBaseURL}/transaction/balance/${session?.userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
+    )
 
     if (!res.ok) {
       throw new Error()
@@ -25,7 +33,7 @@ export async function fetchMonthlyBalance(): Promise<{
 
     return { data: monthlyBalance }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar o balanço mensal.')
     return { message: 'Não foi possível recuperar o balanço mensal.' }
   }
 }
@@ -35,7 +43,12 @@ export async function fetchUserPlans(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/plan/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/plan/${session?.userId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -45,7 +58,7 @@ export async function fetchUserPlans(): Promise<{
 
     return { data: Array.isArray(plans) ? plans : [] }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar os planos.')
     return { message: 'Não foi possível recuperar os planos.' }
   }
 }
@@ -55,7 +68,12 @@ export async function fetchPlanById(planId: string): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/plan/data/${planId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/plan/data/${planId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -65,7 +83,7 @@ export async function fetchPlanById(planId: string): Promise<{
 
     return { data: plan }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar o plano.')
     return { message: 'Não foi possível recuperar o plano.' }
   }
 }
@@ -74,27 +92,14 @@ export async function fecthPlanProgress(
   planId: string,
 ): Promise<{ data?: PlanProgress; message?: string }> {
   try {
-    const res = await fetch(`${apiBaseURL}/plan/progress/${userId}/${planId}`)
-
-    if (!res.ok) {
-      throw new Error()
-    }
-
-    const planProgress = await res.json()
-
-    return { data: planProgress }
-  } catch (error) {
-    console.log('Databse error: ' + error)
-    return { message: 'Não foi possível recuperar o progresso do plano.' }
-  }
-}
-
-export async function fecthCategoriesProgress(
-  planId: string,
-): Promise<{ data?: CategoriesProgress[]; message?: string }> {
-  try {
+    const session = await getSessionData()
     const res = await fetch(
-      `${apiBaseURL}/category/progress/${userId}/${planId}`,
+      `${apiBaseURL}/plan/progress/${session?.userId}/${planId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
     )
 
     if (!res.ok) {
@@ -105,7 +110,38 @@ export async function fecthCategoriesProgress(
 
     return { data: planProgress }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log(
+      'Databse error: Não foi possível recuperar o progresso do plano.',
+    )
+    return { message: 'Não foi possível recuperar o progresso do plano.' }
+  }
+}
+
+export async function fecthCategoriesProgress(
+  planId: string,
+): Promise<{ data?: CategoriesProgress[]; message?: string }> {
+  try {
+    const session = await getSessionData()
+    const res = await fetch(
+      `${apiBaseURL}/category/progress/${session?.userId}/${planId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
+    )
+
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const planProgress = await res.json()
+
+    return { data: planProgress }
+  } catch (error) {
+    console.log(
+      'Databse error: Não foi possível recuperar o progresso das categorias.',
+    )
     return { message: 'Não foi possível recuperar o progresso das categorias.' }
   }
 }
@@ -114,8 +150,14 @@ export async function fecthExpensesPerCategory(
   planId: string,
 ): Promise<{ data?: ExpensesPerCategory[]; message?: string }> {
   try {
+    const session = await getSessionData()
     const res = await fetch(
-      `${apiBaseURL}/transaction/expenses/category/${userId}/${planId}`,
+      `${apiBaseURL}/transaction/expenses/category/${session?.userId}/${planId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
     )
 
     if (!res.ok) {
@@ -128,7 +170,9 @@ export async function fecthExpensesPerCategory(
       data: Array.isArray(expensesPerCategory) ? expensesPerCategory : [],
     }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log(
+      'Databse error: Não foi possível recuperar a relação de categoria e gastos.',
+    )
     return {
       message: 'Não foi possível recuperar a relação de categoria e gastos.',
     }
@@ -140,7 +184,12 @@ export async function fetchUserCategories(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/category/${session?.userId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -150,7 +199,7 @@ export async function fetchUserCategories(): Promise<{
 
     return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar as categorias.')
     return { message: 'Não foi possível recuperar as categorias.' }
   }
 }
@@ -160,7 +209,12 @@ export async function fetchCategoryById(categoryId: number): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/category/data/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -170,7 +224,7 @@ export async function fetchCategoryById(categoryId: number): Promise<{
 
     return { data: category }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar a categoria.')
     return { message: 'Não foi possível recuperar a categoria.' }
   }
 }
@@ -180,7 +234,12 @@ export async function fetchCategoriesByPlan(planId: string): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/category/plan/${planId}`)
+    const session = await getSessionData()
+    const res = await fetch(`${apiBaseURL}/category/plan/${planId}`, {
+      headers: {
+        Authorization: `Bearer ${session?.jwt}`,
+      },
+    })
 
     if (!res.ok) {
       throw new Error()
@@ -190,7 +249,7 @@ export async function fetchCategoriesByPlan(planId: string): Promise<{
 
     return { data: Array.isArray(categories) ? categories : [] }
   } catch (error) {
-    console.log('Databse error: ' + error)
+    console.log('Databse error: Não foi possível recuperar as categorias.')
     return { message: 'Não foi possível recuperar as categorias.' }
   }
 }
@@ -200,7 +259,15 @@ export async function fetchTransactionNumberOfPages(): Promise<{
   message?: string
 }> {
   try {
-    const res = await fetch(`${apiBaseURL}/transaction/pages/${userId}`)
+    const session = await getSessionData()
+    const res = await fetch(
+      `${apiBaseURL}/transaction/pages/${session?.userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
+    )
 
     if (!res.ok) {
       throw new Error()
@@ -210,8 +277,10 @@ export async function fetchTransactionNumberOfPages(): Promise<{
 
     return { data: pagesInfo.pages }
   } catch (error) {
-    console.log('Database error: ' + error)
-    return { message: 'Não foi possível recuperar o número de páginas' }
+    console.log(
+      'Database error: Não foi possível recuperar o número de páginas',
+    )
+    return { message: 'Não foi possível recuperar o número de páginas.' }
   }
 }
 
@@ -226,8 +295,14 @@ export async function fetchTransactionPage(page: number): Promise<{
   message?: string
 }> {
   try {
+    const session = await getSessionData()
     const res = await fetch(
-      `${apiBaseURL}/transaction/history/${userId}/${page}`,
+      `${apiBaseURL}/transaction/history/${session?.userId}/${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.jwt}`,
+        },
+      },
     )
 
     if (!res.ok) {
@@ -238,7 +313,9 @@ export async function fetchTransactionPage(page: number): Promise<{
 
     return { data: Array.isArray(transactions) ? transactions : [] }
   } catch (error) {
-    console.log('Database error: ' + error)
-    return { message: 'Não foi possível recuperar o número de páginas' }
+    console.log(
+      'Database error: Não foi possível recuperar o número de páginas',
+    )
+    return { message: 'Não foi possível recuperar o número de páginas.' }
   }
 }
