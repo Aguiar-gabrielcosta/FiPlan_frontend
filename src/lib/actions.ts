@@ -343,7 +343,7 @@ export async function login(prevState: LoginActionState, formData: FormData) {
 
     // Criação da sessão do usuário e armazenamento em cookies
     const expires = new Date(Date.now() + 8 * 1000 * 60 * 60) // 8 horas
-    const session = await encryptSession({ jwt, userId })
+    const session = await encryptSession({ jwt, userId, username })
     cookies().set('session', session, { expires, httpOnly: true })
   } catch (error) {
     return {
