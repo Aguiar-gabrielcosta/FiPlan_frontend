@@ -2,14 +2,13 @@
 
 import { newPlan, PlanActionState } from '@/src/lib/actions'
 import { Form } from '../../global/form'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { ChangeEvent, useState } from 'react'
 import { Trash2 } from 'lucide-react'
 
 export default function PlanForm() {
   const initialState: PlanActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(newPlan, initialState)
-  const { pending } = useFormStatus()
   const [planBudget, setPlanBudget] = useState('')
   const [newCategories, setNewCategories] = useState<
     {
@@ -243,7 +242,7 @@ export default function PlanForm() {
         </p>
       )}
 
-      <Form.Buttons cancelHref="/resumo/planejamento" pending={pending} />
+      <Form.Buttons cancelHref="/resumo/planejamento" />
     </Form.Root>
   )
 }

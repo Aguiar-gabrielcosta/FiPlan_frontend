@@ -1,7 +1,7 @@
 'use client'
 
 import { Form } from '../../global/form'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { ChangeEvent, useState } from 'react'
 import { Plan } from '@/src/lib/definitions'
 import { updatePlan, UpdatePlanActionState } from '@/src/lib/actions'
@@ -10,7 +10,6 @@ export default function EditPlanForm({ plan }: { plan: Plan }) {
   const initialState: UpdatePlanActionState = { message: null, errors: {} }
   const updatePlanWithId = updatePlan.bind(null, plan.plan_id)
   const [state, formAction] = useFormState(updatePlanWithId, initialState)
-  const { pending } = useFormStatus()
   const [planUpdates, setPlanUpdates] = useState({
     budgetValue: plan.budget_value,
     startDate: plan.start_date,
@@ -120,7 +119,7 @@ export default function EditPlanForm({ plan }: { plan: Plan }) {
         </p>
       )}
 
-      <Form.Buttons cancelHref="/resumo/planejamento" pending={pending} />
+      <Form.Buttons cancelHref="/resumo/planejamento" />
     </Form.Root>
   )
 }

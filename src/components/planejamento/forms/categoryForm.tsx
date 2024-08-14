@@ -4,13 +4,12 @@ import { useState } from 'react'
 import { Form } from '../../global/form'
 import formatDate from '@/src/lib/utils/formatDate'
 import { Plan } from '@/src/lib/definitions'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { CategoryActionState, newCategory } from '@/src/lib/actions'
 
 export default function CategoryForm({ plans }: { plans: Plan[] }) {
   const initialState: CategoryActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(newCategory, initialState)
-  const { pending } = useFormStatus()
   const [planId, setPlanId] = useState('')
 
   return (
@@ -113,7 +112,7 @@ export default function CategoryForm({ plans }: { plans: Plan[] }) {
         </p>
       )}
 
-      <Form.Buttons cancelHref="/resumo/planejamento" pending={pending} />
+      <Form.Buttons cancelHref="/resumo/planejamento" />
     </Form.Root>
   )
 }
