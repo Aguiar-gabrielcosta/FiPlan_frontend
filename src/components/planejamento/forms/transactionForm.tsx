@@ -5,7 +5,7 @@ import { Category, Plan } from '@/src/lib/definitions'
 import formatDate from '@/src/lib/utils/formatDate'
 import { CircleMinus, CirclePlus } from 'lucide-react'
 import { useState } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { Form } from '../../global/form'
 
 export default function TransactionForm({
@@ -17,7 +17,6 @@ export default function TransactionForm({
 }) {
   const initialState: TransactionActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(newTransaction, initialState)
-  const { pending } = useFormStatus()
   const [planId, setPlanId] = useState('')
   const [categoryId, setCategoryId] = useState('')
 
@@ -191,7 +190,7 @@ export default function TransactionForm({
       )}
 
       {/* Botões de cancelar e enviar */}
-      <Form.Buttons cancelHref="/resumo/planejamento" pending={pending} />
+      <Form.Buttons cancelHref="/resumo/planejamento" />
     </Form.Root>
   )
 }

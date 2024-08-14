@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from 'react'
 import { Form } from '../../global/form'
 import { Category } from '@/src/lib/definitions'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { updateCategory, UpdateCategoryActionState } from '@/src/lib/actions'
 
 export default function EditCategoryForm({ category }: { category: Category }) {
@@ -14,7 +14,6 @@ export default function EditCategoryForm({ category }: { category: Category }) {
     category.category_id,
   )
   const [state, formAction] = useFormState(updateCategoryWithId, initialState)
-  const { pending } = useFormStatus()
   const [categoryUpdates, setCategoryUpdates] = useState({
     category: category.category,
     categoryBudget: category.category_budget.toString(),
@@ -100,7 +99,7 @@ export default function EditCategoryForm({ category }: { category: Category }) {
         </p>
       )}
 
-      <Form.Buttons cancelHref="/resumo/planejamento" pending={pending} />
+      <Form.Buttons cancelHref="/resumo/planejamento" />
     </Form.Root>
   )
 }

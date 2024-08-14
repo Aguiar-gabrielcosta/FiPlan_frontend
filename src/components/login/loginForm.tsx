@@ -1,13 +1,12 @@
 'use client'
 
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { Form } from '../global/form'
 import { login, LoginActionState } from '@/src/lib/actions'
 
 export default function LoginForm() {
   const initialState: LoginActionState = { message: null, errors: {} }
   const [state, formAction] = useFormState(login, initialState)
-  const { pending } = useFormStatus()
 
   return (
     <Form.Root action={formAction} id="loginForm">
@@ -65,7 +64,7 @@ export default function LoginForm() {
         </p>
       )}
 
-      <Form.Buttons cancelHref="/" pending={pending}></Form.Buttons>
+      <Form.Buttons cancelHref="/"></Form.Buttons>
     </Form.Root>
   )
 }
