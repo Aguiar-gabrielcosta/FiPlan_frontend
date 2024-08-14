@@ -14,7 +14,7 @@ export default function Error({
   }, [error])
 
   return (
-    <main className="flex h-full flex-col items-center justify-center">
+    <main className="flex min-h-screen flex-col items-center justify-center">
       <h2 className="text-center">
         Não foi possível a comunicação com o servidor. <br />
         Aguarde alguns minutos e tente novamente.
