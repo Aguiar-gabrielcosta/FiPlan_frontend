@@ -6,8 +6,13 @@ test.describe('Planejamento e2e testing', async () => {
     await page.goto('/')
     // Acessar a página resumo
     await page.click('text=Acessar')
-    // Acessar a página de planejamento
-    await page.click('text=Planejamentos')
+    // Fazer o login no usuário de teste
+    await page.getByPlaceholder('Insira o nome de usuário').fill('testUser')
+    await page.getByPlaceholder('Insira sua senha').fill('test123456')
+    // Enviar credenciais
+    await page.locator('text=Enviar').click()
+    // Acessar página de planejamentos
+    await page.locator('text=Planejamentos').click()
   })
 
   test('should have plan options bar', async ({ page }) => {

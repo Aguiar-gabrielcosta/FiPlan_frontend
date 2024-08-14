@@ -6,6 +6,11 @@ test.describe('Resumo e2e testing', async () => {
     await page.goto('/')
     // Acessar a página resumo
     await page.click('text=Acessar')
+    // Fazer o login no usuário de teste
+    await page.getByPlaceholder('Insira o nome de usuário').fill('testUser')
+    await page.getByPlaceholder('Insira sua senha').fill('test123456')
+    // Enviar credenciais
+    await page.locator('text=Enviar').click()
   })
 
   test('should navigate between pages', async ({ page }) => {
@@ -42,5 +47,36 @@ test.describe('Resumo e2e testing', async () => {
     await expect(
       page.locator('section', { hasText: 'Período de análise' }),
     ).toBeVisible()
+  })
+
+  test('should navigate to new plan form', async ({ page }) => {
+    // No menu de acesso rápido apertar o botão "+ plano"
+    await page.locator('text=+ Plano').click()
+    // Deve navegar para a página /resumo/planejamento/plano
+    await expect(page).toHaveURL('/resumo/planejamento/plano')
+    // Deve haver um formulário
+    await expect(page.locator('form')).toBeVisible()
+  })
+
+  test('should navigate to new category', async ({ page }) => {
+    // No menu de acesso rápido apertar o botão "+ categoria"
+    await page.locator('text=+ Categoria').click()
+    // Deve navegar para a página /resumo/planejamento/categoria
+    await expect(page).toHaveURL('/resumo/planejamento/categoria')
+    // Deve haver um formulário ou um aviso que não há planos criados
+    const form = page.locator('form')
+    const message = page.locator('text=Não foi possível carregar seus planos.')
+    await expect(form.or(message)).toBeVisible()
+  })
+
+  test('should navigate to new transaction', async ({ page }) => {
+    // No menu de acesso rápido apertar o botão "+ transação"
+    await page.locator('text=+ Transação').click()
+    // Deve navegar para a página /resumo/planejamento/categoria
+    await expect(page).toHaveURL('/resumo/planejamento/transacao')
+    // Deve haver um formulário ou um aviso que não há planos criados
+    const form = page.locator('form')
+    const message = page.locator('text=Não foi possível carregar seus planos.')
+    await expect(form.or(message)).toBeVisible()
   })
 })
